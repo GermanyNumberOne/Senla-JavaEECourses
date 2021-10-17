@@ -1,0 +1,18 @@
+select mems.firstname || ' ' || mems.surname as member, facs.name as facility,
+			case
+				when mems.memid = 0 then
+						books.slots*facs.guestcost
+				else
+						books.slots*facs.membercost
+			end as cost
+			from cd.members mems
+				inner join cd.bookings books
+				on mems.memid = books.memid
+				inner join cd.facilities facs
+				on facs.facid = books.facid
+			where 
+				books.starttime >= '2012-09-14' and
+				books.starttime < '2012-09-15' and 
+				( (mems.memid = 0 and books.slots*facs.guestcost > 30) or
+				(mems.memid != 0 and books.slots*facs.membercost > 30) )
+order by cost desc;

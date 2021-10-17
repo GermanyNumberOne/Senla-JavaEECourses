@@ -1,0 +1,6 @@
+select distinct mems.firstname || ' ' || mems.surname as members,
+		(select mems2.firstname || ' ' || mems2.surname as recommender
+		from cd.members mems2
+		where mems.recommendedby = mems2.memid)
+		from cd.members mems
+order by members

@@ -1,0 +1,5 @@
+select mems.firstname as memfname, mems.surname as memsname, rec.firstname as recfname, rec.surname as recsname
+			from cd.members mems
+			left outer join cd.members rec
+			on mems.recommendedby = rec.memid
+order by memsname, memfname

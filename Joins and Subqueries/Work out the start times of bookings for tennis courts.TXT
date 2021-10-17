@@ -1,0 +1,9 @@
+select bookings.starttime as start, facilities.name as name
+		from cd.facilities facilities
+			inner join cd.bookings bookings
+			on facilities.facid = bookings.facid
+		where 
+			facilities.name in ('Tennis Court 1', 'Tennis Court 2') and
+			bookings.starttime >= '2012-09-21' and
+			bookings.starttime < '2012-09-22'
+order by bookings.starttime

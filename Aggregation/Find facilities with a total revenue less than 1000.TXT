@@ -1,0 +1,14 @@
+select facs.name, sum(case
+					  when memid = 0 then slots*guestcost
+					  else slots*membercost
+					  end
+					 ) as revenue 
+					 from cd.bookings books
+					 inner join cd.facilities facs
+					 	on facs.facid = books.facid
+					 group by facs.name
+					 having sum(case
+							   when memid = 0 then slots*guestcost
+							   else slots*membercost
+							   end) < 1000
+order by revenue

@@ -1,0 +1,6 @@
+select distinct members2.firstname as firstname, members2.surname as surname 
+		from 
+			cd.members members1
+			inner join cd.members members2
+				on members2.memid = members1.recommendedby
+order by surname, firstname;

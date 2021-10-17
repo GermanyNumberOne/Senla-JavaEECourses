@@ -1,0 +1,6 @@
+select starttime from cd.bookings
+				inner join cd.members on 
+					cd.members.memid = cd.bookings.memid
+	where 
+			members.firstname = 'David' 
+			and members.surname= 'Farrell'

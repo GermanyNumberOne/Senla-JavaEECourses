@@ -1,0 +1,10 @@
+select facs.name, sum(slots*case
+				 when memid = 0 then guestcost
+				 else membercost
+				 end
+  ) as revenue from cd.bookings books
+		inner join cd.facilities facs
+		on facs.facid =  books.facid
+
+group by name
+order by revenue
