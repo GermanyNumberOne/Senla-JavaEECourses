@@ -1,0 +1,1 @@
+CREATE INDEX ON reports(operation_category_id)
