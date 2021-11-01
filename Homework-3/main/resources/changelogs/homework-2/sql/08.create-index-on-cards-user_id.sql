@@ -1,1 +1,0 @@
-CREATE INDEX ON cards(user_id)
