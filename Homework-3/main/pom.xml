@@ -37,8 +37,8 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>4.4.3</version>
                 <configuration>
-                    <propertyFile>${basedir}/resources/liquibase.properties</propertyFile>
-                    <changeLogFile>${basedir}/resources/changelog-master.xml</changeLogFile>
+                    <propertyFile>${basedir}/src/main/liquibase-resources/liquibase.properties</propertyFile>
+                    <changeLogFile>${basedir}/src/main/liquibase-resources/changelog-master.xml</changeLogFile>
                 </configuration>
                 <executions>
                     <execution>
@@ -50,6 +50,13 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/liquibase-resources</directory>
+            </resource>
+        </resources>
+
     </build>
 
 
