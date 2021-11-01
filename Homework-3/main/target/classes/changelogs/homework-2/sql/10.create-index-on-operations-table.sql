@@ -1,0 +1,1 @@
+CREATE INDEX ON operations (report_id)

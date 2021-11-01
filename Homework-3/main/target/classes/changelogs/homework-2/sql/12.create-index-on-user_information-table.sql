@@ -1,0 +1,1 @@
+CREATE INDEX ON user_information(user_id)
