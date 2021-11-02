@@ -3,7 +3,9 @@ package injection;
 import Annotations.Autowire;
 import Annotations.Component;
 import Annotations.Value;
+import injection.exceptions.InjectionException;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,6 +42,11 @@ public class ApplicationContext {
                     classInterfaceMap.put(someClass, interfaceKey);
                 }
             }
+            /*for(Class<?> interfaceKey : interfaces){
+                if(!classInterfaceMap.containsKey(interfaceKey)){
+                    classInterfaceMap.put(interfaceKey, someClass);
+                }
+            }*/
         }
         fillContext();
     }
@@ -73,7 +80,6 @@ public class ApplicationContext {
             if(object == null){
                 object = factory.createBean(field.getType());
             }
-
             field.setAccessible(true);
             field.set(bean, object);
             injectDependencies(object.getClass(), object);
@@ -89,9 +95,15 @@ public class ApplicationContext {
     }
 
     public <T> T getBean(Class<T> type){
+
+        if(context.containsKey(type)){
+            return (T) context.get(type);
+        }
+
         Set<Map.Entry<Class<?>, Class<?>>> classSet = classInterfaceMap.entrySet()
                 .stream().filter(entry -> type.equals(entry.getValue()))
                 .collect(Collectors.toSet());
+
 
         if(classSet.size() != 1) {
             //throw new InjectionException("Getting bean error");
@@ -102,6 +114,8 @@ public class ApplicationContext {
                 .findFirst()
                 .get()
                 .getKey();
+
+
 
         if(context.containsKey(someClass)){
             return (T) context.get(someClass);
