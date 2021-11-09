@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BankAccountDaoImpl extends AbstractDao<BankAccount> implements BankAccountDao {
+public class BankAccountDaoImpl implements BankAccountDao {
     @Autowired
     private DataBase dataBase;
 

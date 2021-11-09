@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl extends AbstractDao<User> implements UserDao {
+public class UserDaoImpl implements UserDao {
     @Autowired
     private DataBase dataBase;
 

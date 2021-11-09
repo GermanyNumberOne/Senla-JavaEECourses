@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserInfoDaoImpl extends AbstractDao<UserInformation> implements UserInfoDao {
+public class UserInfoDaoImpl implements UserInfoDao {
     @Autowired
     private DataBase dataBase;
 

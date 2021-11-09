@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CardDaoImpl extends AbstractDao<Card> implements CardDao {
+public class CardDaoImpl implements CardDao {
     @Autowired
     private DataBase dataBase;
 

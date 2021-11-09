@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class ReportDaoImpl extends AbstractDao<Report> implements ReportDao {
+public class ReportDaoImpl implements ReportDao {
     @Autowired
     private DataBase dataBase;
 
