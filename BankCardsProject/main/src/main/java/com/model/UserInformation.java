@@ -20,7 +20,7 @@ public class UserInformation extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserInformation that = (UserInformation) o;
-        return Objects.equals(telephoneNumber, that.telephoneNumber) && Objects.equals(address, that.address);
+        return Objects.equals(telephoneNumber, that.telephoneNumber) || Objects.equals(address, that.address);
     }
 
     @Override

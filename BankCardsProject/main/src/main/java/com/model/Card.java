@@ -25,11 +25,11 @@ public class Card extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return Objects.equals(number, card.number) && Objects.equals(password, card.password) && Objects.equals(money, card.money);
+        return Objects.equals(number, card.number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, password, money);
+        return Objects.hash(number);
     }
 }

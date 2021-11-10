@@ -21,7 +21,7 @@ public class Operation extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Operation operation = (Operation) o;
-        return Objects.equals(cost, operation.cost) && Objects.equals(report, operation.report);
+        return Objects.equals(report, operation.report);
     }
 
     @Override

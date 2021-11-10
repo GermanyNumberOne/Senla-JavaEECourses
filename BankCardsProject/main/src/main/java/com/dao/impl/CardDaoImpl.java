@@ -29,8 +29,8 @@ public class CardDaoImpl implements CardDao {
         int index = -1;
 
         for(Card card : cards){
-            if(entity.equals(cards)){
-                index = cards.indexOf(cards);
+            if(entity.equals(card)){
+                index = cards.indexOf(card);
                 break;
             }
         }
