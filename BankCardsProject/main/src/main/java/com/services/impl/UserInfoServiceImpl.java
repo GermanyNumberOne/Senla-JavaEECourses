@@ -15,7 +15,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     private final ModelMapper modelMapper;
 
-
     protected UserInfoDao getDefaultDao() {
         return userInfoDao;
     }

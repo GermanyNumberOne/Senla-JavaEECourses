@@ -8,61 +8,65 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
-    public static void Run() throws JsonProcessingException {
+    public static void main(String[] args) throws JsonProcessingException {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Application.class.getPackage().getName());
-        ObjectMapper objectMapper = applicationContext.getBean(ObjectMapper.class);
 
         UserController userController = applicationContext.getBean(UserController.class);
-        CardController cardController = applicationContext.getBean(CardController.class);
-        UserInfoController userInfoController = applicationContext.getBean(UserInfoController.class);
-        BankAccountController bankAccountController = applicationContext.getBean(BankAccountController.class);
-        OperationController operationController = applicationContext.getBean(OperationController.class);
-        ReportController reportController = applicationContext.getBean(ReportController.class);
-
-        userController.create(objectMapper.writeValueAsString(new UserDto()));
-        cardController.create(objectMapper.writeValueAsString(new CardDto()));
-        userInfoController.create(objectMapper.writeValueAsString(new UserInformationDto()));
-        bankAccountController.create(objectMapper.writeValueAsString(new BankAccountDto()));
-        operationController.create(objectMapper.writeValueAsString(new OperationDto()));
-        reportController.create(objectMapper.writeValueAsString(new ReportDto()));
-
-        userController.create(objectMapper.writeValueAsString(new UserDto()));
-        cardController.create(objectMapper.writeValueAsString(new CardDto()));
-        userInfoController.create(objectMapper.writeValueAsString(new UserInformationDto()));
-        bankAccountController.create(objectMapper.writeValueAsString(new BankAccountDto()));
-        operationController.create(objectMapper.writeValueAsString(new OperationDto()));
-        reportController.create(objectMapper.writeValueAsString(new ReportDto()));
-
-
-        System.out.println("-----------------------------------");
+        userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
+        userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
         System.out.println(userController.getMappedObject(1L));
-        System.out.println(cardController.getMappedObject(1L));
-        System.out.println(userInfoController.getMappedObject(1L));
-        System.out.println(bankAccountController.getMappedObject(1L));
-        System.out.println(operationController.getMappedObject(1L));
-        System.out.println(reportController.getMappedObject(1L));
+        userController.delete(0l);
+        userController.update(userController.read(0L));
+        System.out.println(userController.getMappedObject(0L));
+
         System.out.println("-----------------------------------");
 
-        userController.delete(0l);
+        CardController cardController = applicationContext.getBean(CardController.class);
+        cardController.create("{\"id\":null,\"number\":null,\"password\":null,\"money\":null}");
+        cardController.create("{\"id\":null,\"number\":null,\"password\":null,\"money\":null}");
+        System.out.println(cardController.getMappedObject(1L));
         cardController.delete(0l);
-        userInfoController.delete(0l);
-        bankAccountController.delete(0l);
-        operationController.delete(0l);
-        reportController.delete(0l);
-
-        userController.update(userController.read(0L));
         cardController.update(cardController.read(0L));
-        userInfoController.update(userInfoController.read(0L));
-        bankAccountController.update(bankAccountController.read(0L));
-        operationController.update(operationController.read(0L));
-        reportController.update(reportController.read(0L));
-
-        System.out.println(userController.getMappedObject(0L));
         System.out.println(cardController.getMappedObject(0L));
-        System.out.println(userInfoController.getMappedObject(0L));
-        System.out.println(bankAccountController.getMappedObject(0L));
-        System.out.println(operationController.getMappedObject(0L));
-        System.out.println(reportController.getMappedObject(0L));
 
+        System.out.println("-----------------------------------");
+
+        UserInfoController userInfoController = applicationContext.getBean(UserInfoController.class);
+        userInfoController.create("{\"id\":null,\"telephoneNumber\":null,\"address\":null}");
+        userInfoController.create("{\"id\":null,\"telephoneNumber\":null,\"address\":null}");
+        System.out.println(userInfoController.getMappedObject(1L));
+        userInfoController.delete(0l);
+        userInfoController.update(userInfoController.read(0L));
+        System.out.println(userInfoController.getMappedObject(0L));
+
+        System.out.println("-----------------------------------");
+
+        BankAccountController bankAccountController = applicationContext.getBean(BankAccountController.class);
+        bankAccountController.create("{\"id\":null,\"cards\":null,\"operations\":null}");
+        bankAccountController.create("{\"id\":null,\"cards\":null,\"operations\":null}");
+        System.out.println(bankAccountController.getMappedObject(1L));
+        bankAccountController.delete(0l);
+        bankAccountController.update(bankAccountController.read(0L));
+        System.out.println(bankAccountController.getMappedObject(0L));
+
+        System.out.println("-----------------------------------");
+
+        OperationController operationController = applicationContext.getBean(OperationController.class);
+        operationController.create("{\"id\":null,\"cost\":null,\"report\":null}");
+        operationController.create("{\"id\":null,\"cost\":null,\"report\":null}");
+        System.out.println(operationController.getMappedObject(1L));
+        operationController.delete(0l);
+        operationController.update(operationController.read(0L));
+        System.out.println(operationController.getMappedObject(0L));
+
+        System.out.println("-----------------------------------");
+
+        ReportController reportController = applicationContext.getBean(ReportController.class);
+        reportController.create("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
+        reportController.create("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
+        System.out.println(reportController.getMappedObject(1L));
+        reportController.delete(0l);
+        reportController.update(reportController.read(0L));
+        System.out.println(reportController.getMappedObject(0L));
     }
 }

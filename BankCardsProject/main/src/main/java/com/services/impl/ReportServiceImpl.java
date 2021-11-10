@@ -15,7 +15,6 @@ public class ReportServiceImpl implements ReportService{
 
     private final ModelMapper modelMapper;
 
-
     protected ReportDao getDefaultDao() {
         return reportDao;
     }

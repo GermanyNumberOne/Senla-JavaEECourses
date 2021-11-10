@@ -10,6 +10,4 @@ public class OperationDto extends AbstractDto {
     private Long cost;
 
     private ReportDto report;
-
-
 }

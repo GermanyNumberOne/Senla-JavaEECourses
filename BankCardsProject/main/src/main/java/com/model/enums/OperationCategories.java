@@ -2,7 +2,7 @@ package com.model.enums;
 
 
 public enum OperationCategories {
-    first,
-    second,
-    third
+    FIRST,
+    SECOND,
+    THIRD
 }

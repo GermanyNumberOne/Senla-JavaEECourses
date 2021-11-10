@@ -13,6 +13,4 @@ public class ReportDto extends AbstractDto{
     private Boolean isSuccess;
 
     private List<String> operationCategories;
-
-
 }
