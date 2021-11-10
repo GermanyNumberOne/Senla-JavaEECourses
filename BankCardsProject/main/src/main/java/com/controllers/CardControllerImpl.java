@@ -35,8 +35,8 @@ public class CardControllerImpl implements CardController {
     }
 
     @Override
-    public void update(CardDto entity) {
-        cardService.update(entity);
+    public void update(String entity) throws JsonProcessingException {
+        cardService.update(convertObject(entity));
     }
 
     @Override

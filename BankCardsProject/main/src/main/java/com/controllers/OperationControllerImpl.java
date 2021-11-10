@@ -34,8 +34,8 @@ public class OperationControllerImpl implements OperationController {
     }
 
     @Override
-    public void update(OperationDto entity) {
-        operationService.update(entity);
+    public void update(String entity) throws JsonProcessingException {
+        operationService.update(convertObject(entity));
     }
 
     @Override

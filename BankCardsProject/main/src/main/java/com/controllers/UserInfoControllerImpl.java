@@ -34,8 +34,8 @@ public class UserInfoControllerImpl implements UserInfoController {
     }
 
     @Override
-    public void update(UserInformationDto entity) {
-        userInfoService.update(entity);
+    public void update(String entity) throws JsonProcessingException {
+        userInfoService.update(convertObject(entity));
     }
 
     @Override

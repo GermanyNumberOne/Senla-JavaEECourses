@@ -34,8 +34,8 @@ public class ReportControllerImpl implements ReportController {
     }
 
     @Override
-    public void update(ReportDto entity) {
-        reportService.update(entity);
+    public void update(String entity) throws JsonProcessingException {
+        reportService.update(convertObject(entity));
     }
 
     @Override

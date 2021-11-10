@@ -34,8 +34,8 @@ public class BankAccountControllerImpl implements BankAccountController {
     }
 
     @Override
-    public void update(BankAccountDto entity) {
-        bankAccountService.update(entity);
+    public void update(String entity) throws JsonProcessingException {
+        bankAccountService.update(convertObject(entity));
     }
 
     @Override

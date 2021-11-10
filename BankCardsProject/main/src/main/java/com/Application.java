@@ -16,7 +16,7 @@ public class Application {
         userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
         System.out.println(userController.getMappedObject(1L));
         userController.delete(0l);
-        userController.update(userController.read(0L));
+        userController.update("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
         System.out.println(userController.getMappedObject(0L));
 
         System.out.println("-----------------------------------");
@@ -26,7 +26,7 @@ public class Application {
         cardController.create("{\"id\":null,\"number\":null,\"password\":null,\"money\":null}");
         System.out.println(cardController.getMappedObject(1L));
         cardController.delete(0l);
-        cardController.update(cardController.read(0L));
+        cardController.update("{\"id\":null,\"number\":null,\"password\":null,\"money\":null}");
         System.out.println(cardController.getMappedObject(0L));
 
         System.out.println("-----------------------------------");
@@ -36,7 +36,7 @@ public class Application {
         userInfoController.create("{\"id\":null,\"telephoneNumber\":null,\"address\":null}");
         System.out.println(userInfoController.getMappedObject(1L));
         userInfoController.delete(0l);
-        userInfoController.update(userInfoController.read(0L));
+        userInfoController.update("{\"id\":null,\"telephoneNumber\":null,\"address\":null}");
         System.out.println(userInfoController.getMappedObject(0L));
 
         System.out.println("-----------------------------------");
@@ -46,7 +46,7 @@ public class Application {
         bankAccountController.create("{\"id\":null,\"cards\":null,\"operations\":null}");
         System.out.println(bankAccountController.getMappedObject(1L));
         bankAccountController.delete(0l);
-        bankAccountController.update(bankAccountController.read(0L));
+        bankAccountController.update("{\"id\":null,\"cards\":null,\"operations\":null}");
         System.out.println(bankAccountController.getMappedObject(0L));
 
         System.out.println("-----------------------------------");
@@ -56,7 +56,7 @@ public class Application {
         operationController.create("{\"id\":null,\"cost\":null,\"report\":null}");
         System.out.println(operationController.getMappedObject(1L));
         operationController.delete(0l);
-        operationController.update(operationController.read(0L));
+        operationController.update("{\"id\":null,\"cost\":null,\"report\":null}");
         System.out.println(operationController.getMappedObject(0L));
 
         System.out.println("-----------------------------------");
@@ -66,7 +66,7 @@ public class Application {
         reportController.create("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
         System.out.println(reportController.getMappedObject(1L));
         reportController.delete(0l);
-        reportController.update(reportController.read(0L));
+        reportController.update("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
         System.out.println(reportController.getMappedObject(0L));
     }
 }
