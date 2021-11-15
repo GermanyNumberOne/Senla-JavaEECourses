@@ -1,11 +1,13 @@
 package com.dao.impl;
 
+import com.annotations.Transaction;
 import com.dao.DataBase;
 import com.dao.api.UserDao;
 import com.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
 import java.util.List;
 
 @Repository
@@ -13,6 +15,7 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private DataBase dataBase;
 
+    @Override
     public void create(User entity) {
         dataBase.getUsers().add(entity);
     }
@@ -21,6 +24,7 @@ public class UserDaoImpl implements UserDao {
     public User read(Long id) {
         return dataBase.getUsers().get(id.intValue());
     }
+
 
     @Override
     public void update(User entity) {

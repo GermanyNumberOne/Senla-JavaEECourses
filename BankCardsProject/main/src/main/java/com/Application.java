@@ -22,12 +22,12 @@ public class Application {
         System.out.println("-----------------------------------");
 
         CardController cardController = applicationContext.getBean(CardController.class);
-        cardController.create("{\"id\":null,\"number\":\"322\",\"password\":null,\"money\":null}");
-        cardController.create("{\"id\":null,\"number\":\"322\",\"password\":null,\"money\":null}");
-        System.out.println(cardController.getMappedObject(1L));
-        cardController.delete(0l);
-        cardController.update("{\"id\":null,\"number\":\"322\",\"password\":\"223\",\"money\":null}");
-        System.out.println(cardController.getMappedObject(0L));
+        cardController.create("{\"id\":null,\"number\":\"8825\",\"password\":\"123\",\"money\":\"20000\"}");
+        cardController.create("{\"id\":null,\"number\":\"6284\",\"password\":\"123\",\"money\":\"20000\"}");
+        System.out.println(cardController.getMappedObject(6284L));
+        cardController.delete(8825l);
+        cardController.update("{\"id\":null,\"number\":\"6284\",\"password\":\"223\",\"money\":null}");
+        System.out.println(cardController.getMappedObject(6284L));
 
         System.out.println("-----------------------------------");
 
