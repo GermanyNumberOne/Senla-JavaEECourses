@@ -2,15 +2,13 @@ package com;
 
 import com.controllers.api.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.dto.*;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class Application {
-    public static void main(String[] args) throws JsonProcessingException {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Application.class.getPackage().getName());
+import java.sql.SQLException;
 
+public class Application {
+    public static void main(String[] args) throws JsonProcessingException, SQLException {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Application.class.getPackage().getName());
         UserController userController = applicationContext.getBean(UserController.class);
         userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
         userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
@@ -69,6 +67,6 @@ public class Application {
         reportController.update("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
         System.out.println(reportController.getMappedObject(0L));
 
-
+        applicationContext.close();
     }
 }
