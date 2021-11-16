@@ -12,9 +12,9 @@ import java.util.Objects;
 @Setter
 @Component
 public class BankAccount extends BaseEntity {
-    @Autowired
+
     private List<Card> cards;
-    @Autowired
+
     private List<Operation> operations;
 
     @Override

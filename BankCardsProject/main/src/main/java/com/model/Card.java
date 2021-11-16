@@ -17,7 +17,7 @@ public class Card extends BaseEntity {
     private Short password;
 
     private Long money;
-    @Autowired
+
     private User user;
 
     @Override

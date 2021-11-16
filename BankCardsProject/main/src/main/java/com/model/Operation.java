@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Operation extends BaseEntity {
 
     private Long cost;
-    @Autowired
+
     private Report report;
 
     @Override

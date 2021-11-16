@@ -68,5 +68,7 @@ public class Application {
         reportController.delete(0l);
         reportController.update("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
         System.out.println(reportController.getMappedObject(0L));
+
+
     }
 }

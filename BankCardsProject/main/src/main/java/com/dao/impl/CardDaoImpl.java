@@ -1,6 +1,7 @@
 package com.dao.impl;
 
 import com.annotations.Transaction;
+import com.connection.MyConnectionHolder;
 import com.dao.DataBase;
 import com.dao.api.CardDao;
 import com.model.Card;
@@ -14,14 +15,14 @@ public class CardDaoImpl implements CardDao {
     @Autowired
     private DataBase dataBase;
     @Autowired
-    private Connection connection;
+    private MyConnectionHolder connection;
 
 
     @Override
     @Transaction
     public void create(Card entity) {
         try{
-            Statement statement = connection.createStatement();
+            Statement statement = connection.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery("select * from cards where card_number='" + entity.getNumber() + "'");
             if(resultSet.next()){
                 throw new Exception("card is already exists");
@@ -39,7 +40,7 @@ public class CardDaoImpl implements CardDao {
     @Transaction
     public Card read(Long id) {
         try {
-            Statement statement = connection.createStatement();
+            Statement statement = connection.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery("select * from cards where card_number='" + id.toString() + "'");
             if(resultSet.next()){
                 Card card = new Card();
@@ -62,7 +63,7 @@ public class CardDaoImpl implements CardDao {
     @Transaction
     public void update(Card entity) {
         try {
-            Statement statement = connection.createStatement();
+            Statement statement = connection.getConnection().createStatement();
             statement.execute("update cards set password=" + entity.getPassword() + ", money=" + entity.getMoney()
             + " where card_number=" + "'" + entity.getNumber() + "'" + ";");
             statement.close();
@@ -90,7 +91,7 @@ public class CardDaoImpl implements CardDao {
     @Transaction
     public void delete(Long id) {
         try{
-            Statement statement = connection.createStatement();
+            Statement statement = connection.getConnection().createStatement();
             statement.execute("delete from cards where card_number='" + id.toString() + "';");
             statement.close();
         } catch (SQLException throwables) {
