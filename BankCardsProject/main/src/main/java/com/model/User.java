@@ -15,9 +15,9 @@ public class User extends BaseEntity {
     private String name;
 
     private String surname;
-    @Autowired
+
     private List<Card> cards;
-    @Autowired
+
     private UserInformation userInfo;
 
     @Override
