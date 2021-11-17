@@ -10,7 +10,7 @@ public class Application {
     public static void main(String[] args) throws JsonProcessingException, SQLException {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Application.class.getPackage().getName());
         applicationContext.registerShutdownHook();
-        
+
 
         UserController userController = applicationContext.getBean(UserController.class);
         userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
