@@ -20,6 +20,7 @@ public class MyConnectionHolder {
 
     @PreDestroy
     public void closeConnection() throws SQLException {
+        System.out.println("close");
         connection.close();
     }
 }
