@@ -5,31 +5,36 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
 @Component
+@Entity
+@Table(name = "users")
+@NamedEntityGraph(name = "graph.User", attributeNodes = {
+        @NamedAttributeNode("userCards"),
+        @NamedAttributeNode("userInfo"),
+        @NamedAttributeNode("bankAccount")
+})
 public class User extends BaseEntity {
-    private String name;
 
+    @Column(name = "firstname")
+    private String firstname;
+
+    @Column(name = "surname")
     private String surname;
 
-    private List<Card> cards;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bank_account_id")
+    private BankAccount bankAccount;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Card> userCards;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private UserInformation userInfo;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(name, user.name) || Objects.equals(surname, user.surname);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, surname, cards, userInfo);
-    }
 }

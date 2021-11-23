@@ -8,11 +8,11 @@ import java.util.List;
 @Getter
 @Setter
 public class UserDto extends AbstractDto {
-    private String name;
+    private String firstname;
 
     private String surname;
 
-    private List<CardDto> cards;
+    private List<CardDto> userCards;
 
     private UserInformationDto userInfo;
 }

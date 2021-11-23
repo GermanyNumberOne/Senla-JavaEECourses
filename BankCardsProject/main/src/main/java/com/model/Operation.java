@@ -2,30 +2,27 @@ package com.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
 @Setter
 @Component
+@Entity
+@Table(name = "operations")
 public class Operation extends BaseEntity {
 
+    @Column(name = "cost")
     private Long cost;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bank_account_id")
+    private BankAccount bankAccount;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
     private Report report;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Operation operation = (Operation) o;
-        return Objects.equals(report, operation.report);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cost, report);
-    }
 }

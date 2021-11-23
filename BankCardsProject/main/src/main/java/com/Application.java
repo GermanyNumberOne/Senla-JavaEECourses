@@ -1,18 +1,21 @@
 package com;
 
-import com.controllers.api.*;
+import com.dao.api.BankAccountDao;
+import com.dao.api.CardDao;
+import com.dao.api.UserDao;
+import com.dao.api.UserInfoDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.model.User;
+import com.model.UserInformation;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.sql.SQLException;
-
 public class Application {
-    public static void main(String[] args) throws JsonProcessingException, SQLException {
+    public static void main(String[] args) throws JsonProcessingException{
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Application.class.getPackage().getName());
         applicationContext.registerShutdownHook();
 
-
-        UserController userController = applicationContext.getBean(UserController.class);
+       /* UserController userController = applicationContext.getBean(UserController.class);
         userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
         userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
         System.out.println(userController.getMappedObject(1L));
@@ -69,7 +72,7 @@ public class Application {
         reportController.delete(0l);
         reportController.update("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
         System.out.println(reportController.getMappedObject(0L));
-
+*/
         
         //applicationContext.close();
     }

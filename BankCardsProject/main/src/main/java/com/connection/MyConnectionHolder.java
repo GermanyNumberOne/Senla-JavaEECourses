@@ -15,12 +15,12 @@ import java.sql.SQLException;
 @Getter
 @Setter
 public class MyConnectionHolder {
-    @Autowired
+   /* @Autowired
     private Connection connection;
 
     @PreDestroy
     public void closeConnection() throws SQLException {
         System.out.println("close");
         connection.close();
-    }
+    }*/
 }

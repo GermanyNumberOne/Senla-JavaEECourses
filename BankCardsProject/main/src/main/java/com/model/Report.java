@@ -1,32 +1,30 @@
 package com.model;
 
+import com.model.enums.OperationCategories;
 import lombok.Getter;
 import lombok.Setter;
-import com.model.enums.OperationCategories;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
 @Component
+@Entity
+@Table(name = "reports")
 public class Report extends BaseEntity {
 
+    @Column(name = "is_success")
     private Boolean isSuccess;
 
-    private List<OperationCategories> operationCategories;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "operation_id")
+    private Operation operation;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Report report = (Report) o;
-        return Objects.equals(isSuccess, report.isSuccess) && Objects.equals(operationCategories, report.operationCategories);
-    }
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "operation_category_id")
+    private OperationCategories operationCategory;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(isSuccess, operationCategories);
-    }
 }
