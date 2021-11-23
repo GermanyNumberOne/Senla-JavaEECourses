@@ -27,7 +27,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
             entityManager.flush();
         }
 
-        logger.info("entity created");
+        logger.info("entity has been created");
     }
 
     @Override
@@ -41,7 +41,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     public void update(T entity) {
         entityManager.merge(entity);
         entityManager.flush();
-        logger.info("entity updated");
+        logger.info("entity has been updated");
     }
 
     @Override
@@ -49,5 +49,6 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     public void delete(Long id) {
         entityManager.remove(entityManager.find(getEntityClass(), id));
         entityManager.flush();
+        logger.info("entity has been deleted");
     }
 }
