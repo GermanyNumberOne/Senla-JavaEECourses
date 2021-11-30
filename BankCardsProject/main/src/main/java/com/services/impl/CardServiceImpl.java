@@ -1,5 +1,6 @@
 package com.services.impl;
 
+import com.model.UserInformation;
 import com.services.api.CardService;
 import com.dao.api.CardDao;
 import com.dto.CardDto;
@@ -30,13 +31,29 @@ public class CardServiceImpl implements CardService {
     @Override
     @Transactional
     public CardDto read(Long id) {
-        return modelMapper.map(getDefaultDao().read(id), CardDto.class);
+        Card card = getDefaultDao().read(id);
+        if(card == null)return null;
+        return modelMapper.map(card, CardDto.class);
     }
 
     @Override
     @Transactional
     public void update(CardDto entity) {
         getDefaultDao().update(modelMapper.map(entity, Card.class));
+    }
+
+    @Transactional
+    public CardDto readCardByNumber(String number){
+        Card card = getDefaultDao().findCardByNumber(number);
+        if(card == null)return  null;
+
+        return modelMapper.map(card, CardDto.class);
+    }
+
+    @Transactional
+    @Override
+    public void deleteCardByNumber(String number){
+        getDefaultDao().deleteCardByNumber(number);
     }
 
     @Override

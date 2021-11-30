@@ -13,39 +13,43 @@ import java.util.logging.Logger;
 public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     protected abstract Class<T> getEntityClass();
 
     private final Logger logger = Logger.getLogger(AbstractDao.class.getName());
 
     @Override
-    @Transactional
     public void create(T entity) {
-        if(!entityManager.contains(entity)){
+        if(entityManager.find(getEntityClass(), entity.getId()) == null){
             entityManager.persist(entity);
             entityManager.flush();
+            logger.info("entity " + getEntityClass().getSimpleName() + " has been created");
         }
-
-        logger.info("entity has been created");
+        else{
+            logger.info("entity " + getEntityClass().getSimpleName() + " has not been created");
+        }
     }
 
     @Override
-    @Transactional
     public T read(Long id) {
        return entityManager.find(getEntityClass(), id);
     }
 
     @Override
-    @Transactional
     public void update(T entity) {
         entityManager.merge(entity);
+        //entityManager.refresh(entityManager.merge(entity));
+        /*if(entityManager.find(getEntityClass(), entity.getId()) != null){
+            entityManager.remove(entityManager.find(getEntityClass(), entity.getId()));
+            entityManager.flush();
+            create(entity);
+        }*/
         entityManager.flush();
-        logger.info("entity has been updated");
+        logger.info("entity " + getEntityClass().getSimpleName() + " has been updated");
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         entityManager.remove(entityManager.find(getEntityClass(), id));
         entityManager.flush();

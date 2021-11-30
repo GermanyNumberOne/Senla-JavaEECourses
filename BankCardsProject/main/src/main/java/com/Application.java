@@ -1,13 +1,7 @@
 package com;
 
-import com.dao.api.BankAccountDao;
-import com.dao.api.CardDao;
-import com.dao.api.UserDao;
-import com.dao.api.UserInfoDao;
+import com.controllers.api.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.model.User;
-import com.model.UserInformation;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
@@ -15,65 +9,81 @@ public class Application {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Application.class.getPackage().getName());
         applicationContext.registerShutdownHook();
 
-       /* UserController userController = applicationContext.getBean(UserController.class);
-        userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
-        userController.create("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
+        /*
+        [{"id":"1","number":"8825","password":"123","money":"20000","userId":"1"}]
+        {"id":"1","telephoneNumber":null,"address":null,"userId":"1"}
+         */
+
+
+        UserController userController = applicationContext.getBean(UserController.class);
+        userController.create("{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":null,\"userCards\":null,\"userInfo\":null}");
+        userController.create("{\"id\":\"2\",\"firstname\":\"John\",\"surname\":null,\"userCards\":null,\"userInfo\":null}");
         System.out.println(userController.getMappedObject(1L));
-        userController.delete(0l);
-        userController.update("{\"id\":null,\"name\":null,\"surname\":null,\"cards\":null,\"userInfo\":null}");
-        System.out.println(userController.getMappedObject(0L));
+        userController.delete(2l);
+        userController.update("{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":\"Smith\",\"userCards\":null,\"userInfo\":null}");
+        System.out.println(userController.getMappedObject(1L));
 
         System.out.println("-----------------------------------");
 
         CardController cardController = applicationContext.getBean(CardController.class);
-        cardController.create("{\"id\":null,\"number\":\"8825\",\"password\":\"123\",\"money\":\"20000\"}");
-        cardController.create("{\"id\":null,\"number\":\"6284\",\"password\":\"123\",\"money\":\"20000\"}");
-        System.out.println(cardController.getMappedObject(6284L));
-        cardController.delete(8825l);
-        cardController.update("{\"id\":null,\"number\":\"6284\",\"password\":\"223\",\"money\":null}");
-        System.out.println(cardController.getMappedObject(6284L));
+        cardController.create("{\"id\":\"1\",\"number\":\"8825\",\"password\":\"123\",\"money\":\"20000\",\"userId\":\"1\"}");
+        cardController.create("{\"id\":\"2\",\"number\":\"6284\",\"password\":\"123\",\"money\":\"20000\"}");
+        System.out.println(cardController.readCardByNumber("8825"));
+        cardController.deleteCardByNumber("6284");
+        cardController.update("{\"id\":\"1\",\"number\":\"8825\",\"password\":\"234\",\"money\":\"20000\",\"userId\":\"1\"}");
+        System.out.println(cardController.readCardByNumber("8825"));
 
         System.out.println("-----------------------------------");
 
         UserInfoController userInfoController = applicationContext.getBean(UserInfoController.class);
-        userInfoController.create("{\"id\":null,\"telephoneNumber\":null,\"address\":null}");
-        userInfoController.create("{\"id\":null,\"telephoneNumber\":null,\"address\":null}");
+        userInfoController.create("{\"id\":\"1\",\"telephoneNumber\":null,\"address\":null,\"userId\":\"1\"}");
+        userInfoController.create("{\"id\":\"3\",\"telephoneNumber\":null,\"address\":null}");
         System.out.println(userInfoController.getMappedObject(1L));
-        userInfoController.delete(0l);
-        userInfoController.update("{\"id\":null,\"telephoneNumber\":null,\"address\":null}");
-        System.out.println(userInfoController.getMappedObject(0L));
+        userInfoController.delete(3l);
+        userInfoController.update("{\"id\":\"1\",\"telephoneNumber\":\"123\",\"address\":null,\"userId\":\"1\"}");
+        System.out.println(userInfoController.getMappedObject(1L));
 
         System.out.println("-----------------------------------");
 
+        userController.update("{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":\"Smith\"" +
+                ",\"userCards\":[{\"id\":\"1\",\"number\":\"8825\",\"password\":\"234\",\"money\":\"20000\",\"userId\":\"1\"}]" +
+                ",\"userInfo\":{\"id\":\"1\",\"telephoneNumber\":\"123\",\"address\":null,\"userId\":\"1\"}}");
+
+        System.out.println("User JPQL: " + userController.findUserByIdByJPQL(1l));
+        System.out.println("User Criteria: " + userController.findUserByIdByCriteria(1l));
+        System.out.println("User Entity Graph: " + userController.findUserByIdByEntityGraph(1l));
+/*
         BankAccountController bankAccountController = applicationContext.getBean(BankAccountController.class);
-        bankAccountController.create("{\"id\":null,\"cards\":null,\"operations\":null}");
-        bankAccountController.create("{\"id\":null,\"cards\":null,\"operations\":null}");
+        bankAccountController.create("{\"id\":\"1\"" +
+                ",\"users\":[{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":null,\"userCards\":[{\"id\":\"1\",\"number\":\"8825\",\"password\":\"123\",\"money\":\"20000\"}],\"userInfo\":{\"id\":\"1\",\"telephoneNumber\":null,\"address\":null,\"userId\":\"1\"}}]" +
+                ",\"operations\":null}");
+        bankAccountController.create("{\"id\":\"2\",\"users\":null,\"operations\":null}");
         System.out.println(bankAccountController.getMappedObject(1L));
-        bankAccountController.delete(0l);
-        bankAccountController.update("{\"id\":null,\"cards\":null,\"operations\":null}");
-        System.out.println(bankAccountController.getMappedObject(0L));
+        bankAccountController.delete(2l);
+        //bankAccountController.update("{\"id\":\"1\",\"users\":null,\"operations\":null}");
+        System.out.println(bankAccountController.getMappedObject(1L));
 
         System.out.println("-----------------------------------");
-
+*/
+/*
         OperationController operationController = applicationContext.getBean(OperationController.class);
-        operationController.create("{\"id\":null,\"cost\":null,\"report\":null}");
-        operationController.create("{\"id\":null,\"cost\":null,\"report\":null}");
+        operationController.create("{\"id\":\"1\",\"cost\":null,\"report\":{\"id\":\"1\",\"isSuccess\":null,\"operationId\":\"1\",\"operationCategories\":null}}");
+        operationController.create("{\"id\":\"2\",\"cost\":null,\"report\":{\"id\":\"2\",\"isSuccess\":null,\"operationCategories\":null}}");
         System.out.println(operationController.getMappedObject(1L));
-        operationController.delete(0l);
-        operationController.update("{\"id\":null,\"cost\":null,\"report\":null}");
-        System.out.println(operationController.getMappedObject(0L));
+        operationController.delete(2l);
+        operationController.update("{\"id\":\"1\",\"cost\":null,\"report\":null}");
+        System.out.println(operationController.getMappedObject(1L));
 
         System.out.println("-----------------------------------");
 
         ReportController reportController = applicationContext.getBean(ReportController.class);
-        reportController.create("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
-        reportController.create("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
+        reportController.create("{\"id\":\"1\",\"isSuccess\":null,\"operationId\":\"1\",\"operationCategories\":null}");
+        reportController.create("{\"id\":\"2\",\"isSuccess\":null,\"operationCategories\":null}");
         System.out.println(reportController.getMappedObject(1L));
-        reportController.delete(0l);
-        reportController.update("{\"id\":null,\"isSuccess\":null,\"operationCategories\":null}");
-        System.out.println(reportController.getMappedObject(0L));
-*/
-        
-        //applicationContext.close();
+        reportController.delete(2l);
+        reportController.update("{\"id\":\"1\",\"isSuccess\":null,\"operationCategories\":null}");
+        System.out.println(reportController.getMappedObject(1L));
+
+        */
     }
 }

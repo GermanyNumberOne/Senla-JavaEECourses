@@ -12,6 +12,8 @@ public class UserDto extends AbstractDto {
 
     private String surname;
 
+    private Long bankAccountId;
+
     private List<CardDto> userCards;
 
     private UserInformationDto userInfo;

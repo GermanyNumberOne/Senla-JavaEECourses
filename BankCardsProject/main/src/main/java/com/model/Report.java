@@ -19,7 +19,7 @@ public class Report extends BaseEntity {
     @Column(name = "is_success")
     private Boolean isSuccess;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "operation_id")
     private Operation operation;
 

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import com.model.UserInformation;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,21 +21,25 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    @Transactional
     public void create(UserInformationDto entity) {
         getDefaultDao().create(modelMapper.map(entity, UserInformation.class));
     }
 
     @Override
+    @Transactional
     public UserInformationDto read(Long id) {
         return modelMapper.map(getDefaultDao().read(id), UserInformationDto.class);
     }
 
     @Override
+    @Transactional
     public void update(UserInformationDto entity) {
         getDefaultDao().update(modelMapper.map(entity, UserInformation.class));
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         getDefaultDao().delete(id);
     }

@@ -13,7 +13,7 @@ import java.util.Objects;
 @Setter
 @Component
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "public")
 @NamedEntityGraph(name = "graph.User", attributeNodes = {
         @NamedAttributeNode("userCards"),
         @NamedAttributeNode("userInfo"),
@@ -31,10 +31,12 @@ public class User extends BaseEntity {
     @JoinColumn(name = "bank_account_id")
     private BankAccount bankAccount;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Column(name = "user_cards")
     private List<Card> userCards;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_info", referencedColumnName = "id")
     private UserInformation userInfo;
 
 }

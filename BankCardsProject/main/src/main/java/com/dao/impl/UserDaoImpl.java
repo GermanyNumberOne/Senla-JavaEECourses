@@ -20,15 +20,11 @@ import java.util.Map;
 @Repository
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
     protected Class<User> getEntityClass() {
         return User.class;
     }
 
-    @Transactional
     public List<User> findUserByNameByJPQL(String name){
         Query query = entityManager.createQuery("select u from User u where u.firstname = :name");
         query.setParameter("name", name);
@@ -36,15 +32,15 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
 
-    @Transactional
     public User findUserByIdByJPQL(Long id){
         return entityManager.createQuery("SELECT user FROM User user JOIN FETCH user.userCards cards" +
-                        " JOIN FETCH user.userInfo info where user.id = :id", User.class)
+                    " JOIN FETCH user.userInfo info" +
+                    " JOIN FETCH user.bankAccount" +
+                    " where user.id = :id", User.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
 
-    @Transactional
     public User findUserByIdByCriteria(Long id){
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
@@ -57,7 +53,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 
-    @Transactional
     public User findUserByIdByEntityGraph(Long id){
         EntityGraph graph = entityManager.createEntityGraph("graph.User");
         Map hints = new HashMap();

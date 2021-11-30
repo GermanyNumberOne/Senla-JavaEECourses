@@ -1,5 +1,6 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_information")
 public class UserInformation extends BaseEntity {
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "userInfo",fetch = FetchType.LAZY)
+   // @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Column(name = "telephone_number")

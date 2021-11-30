@@ -9,12 +9,14 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
@@ -50,19 +52,27 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public EntityManager getEntityManager()
-    {
-        return getLocalContainerEntityManagerFactoryBean().getObject().createEntityManager();
-    }
-
-    @Bean
     public LocalContainerEntityManagerFactoryBean getLocalContainerEntityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(getDataSource());
-        localContainerEntityManagerFactoryBean.setPersistenceUnitName("default-unit");
+        localContainerEntityManagerFactoryBean.setPackagesToScan(new String[] {"com.model"});
+
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        localContainerEntityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
+        localContainerEntityManagerFactoryBean.setJpaProperties(additionalJPAProperties());
 
         return localContainerEntityManagerFactoryBean;
     }
+
+    public Properties additionalJPAProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hdb2ddl.auto", "none");
+        properties.setProperty("hibernate.show_sql", "false");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+
+        return properties;
+    }
+
 
     @Bean
     public ModelMapper getMMbean(){

@@ -2,6 +2,7 @@ package com.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -20,8 +21,8 @@ public class Card extends BaseEntity {
 
     private Long money;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
 }

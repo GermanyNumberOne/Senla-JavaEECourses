@@ -39,6 +39,14 @@ public class CardControllerImpl implements CardController {
         cardService.update(convertObject(entity));
     }
 
+    public void deleteCardByNumber(String number){
+        cardService.deleteCardByNumber(number);
+    }
+
+    public String readCardByNumber(String number) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(cardService.readCardByNumber(number));
+    }
+
     @Override
     public void delete(Long id) {
         cardService.delete(id);

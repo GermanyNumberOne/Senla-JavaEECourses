@@ -42,4 +42,21 @@ public class UserControllerImpl implements UserController {
     public void delete(Long id) {
         userService.delete(id);
     }
+
+    public String findUserByIdByJPQL(Long id) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(userService.findUserByIdByJPQL(id));
+    }
+
+    public String findUserByIdByCriteria(Long id) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(userService.findUserByIdByCriteria(id));
+    }
+
+    public String findUserByIdByEntityGraph(Long id) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(userService.findUserByIdByEntityGraph(id));
+    }
+
+     public UserDto readUserByName(String name){
+        return userService.readUserByName(name);
+    }
+
 }

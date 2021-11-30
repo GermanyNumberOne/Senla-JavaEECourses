@@ -18,13 +18,11 @@ import java.util.List;
 @Table(name = "bank_accounts")
 public class BankAccount extends BaseEntity {
 
-    @OneToMany(mappedBy = "bankAccount")
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
     @Column(name = "user_id")
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> users;
 
-    @OneToMany(mappedBy = "bankAccount")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
     @Column(name = "payment_id")
     private List<Operation> operations;
 
