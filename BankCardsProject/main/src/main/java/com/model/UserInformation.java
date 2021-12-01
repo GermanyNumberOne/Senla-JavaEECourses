@@ -14,8 +14,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_information")
 public class UserInformation extends BaseEntity {
-    @OneToOne(mappedBy = "userInfo",fetch = FetchType.LAZY)
-   // @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Column(name = "telephone_number")

@@ -35,8 +35,8 @@ public class User extends BaseEntity {
     @Column(name = "user_cards")
     private List<Card> userCards;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_info", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   // @JoinColumn(name = "user_info", referencedColumnName = "id")
     private UserInformation userInfo;
 
 }

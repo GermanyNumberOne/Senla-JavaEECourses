@@ -9,18 +9,25 @@ public class Application {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Application.class.getPackage().getName());
         applicationContext.registerShutdownHook();
 
-        /*
-        [{"id":"1","number":"8825","password":"123","money":"20000","userId":"1"}]
-        {"id":"1","telephoneNumber":null,"address":null,"userId":"1"}
-         */
+        BankAccountController bankAccountController = applicationContext.getBean(BankAccountController.class);
+        bankAccountController.create("{\"id\":\"1\"" +
+                ",\"users\":[{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":\"Smith\",\"userCards\":null,\"userInfo\":null}]" +
+                ",\"operations\":null}");
+        bankAccountController.create("{\"id\":\"2\",\"users\":null,\"operations\":null}");
+        System.out.println(bankAccountController.getMappedObject(1L));
+        bankAccountController.delete(2l);
+        System.out.println(bankAccountController.getMappedObject(1L));
+
+        System.out.println("-----------------------------------");
+
 
 
         UserController userController = applicationContext.getBean(UserController.class);
-        userController.create("{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":null,\"userCards\":null,\"userInfo\":null}");
+        userController.create("{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":null,\"userCards\":null,\"userInfo\":null,\"bankAccountId\":\"1\"}");
         userController.create("{\"id\":\"2\",\"firstname\":\"John\",\"surname\":null,\"userCards\":null,\"userInfo\":null}");
         System.out.println(userController.getMappedObject(1L));
         userController.delete(2l);
-        userController.update("{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":\"Smith\",\"userCards\":null,\"userInfo\":null}");
+        userController.update("{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":\"Smith\",\"userCards\":null,\"userInfo\":null,\"bankAccountId\":\"1\"}");
         System.out.println(userController.getMappedObject(1L));
 
         System.out.println("-----------------------------------");
@@ -45,26 +52,12 @@ public class Application {
 
         System.out.println("-----------------------------------");
 
-        userController.update("{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":\"Smith\"" +
-                ",\"userCards\":[{\"id\":\"1\",\"number\":\"8825\",\"password\":\"234\",\"money\":\"20000\",\"userId\":\"1\"}]" +
-                ",\"userInfo\":{\"id\":\"1\",\"telephoneNumber\":\"123\",\"address\":null,\"userId\":\"1\"}}");
-
         System.out.println("User JPQL: " + userController.findUserByIdByJPQL(1l));
         System.out.println("User Criteria: " + userController.findUserByIdByCriteria(1l));
         System.out.println("User Entity Graph: " + userController.findUserByIdByEntityGraph(1l));
-/*
-        BankAccountController bankAccountController = applicationContext.getBean(BankAccountController.class);
-        bankAccountController.create("{\"id\":\"1\"" +
-                ",\"users\":[{\"id\":\"1\",\"firstname\":\"Jack\",\"surname\":null,\"userCards\":[{\"id\":\"1\",\"number\":\"8825\",\"password\":\"123\",\"money\":\"20000\"}],\"userInfo\":{\"id\":\"1\",\"telephoneNumber\":null,\"address\":null,\"userId\":\"1\"}}]" +
-                ",\"operations\":null}");
-        bankAccountController.create("{\"id\":\"2\",\"users\":null,\"operations\":null}");
-        System.out.println(bankAccountController.getMappedObject(1L));
-        bankAccountController.delete(2l);
-        //bankAccountController.update("{\"id\":\"1\",\"users\":null,\"operations\":null}");
-        System.out.println(bankAccountController.getMappedObject(1L));
 
-        System.out.println("-----------------------------------");
-*/
+
+
 /*
         OperationController operationController = applicationContext.getBean(OperationController.class);
         operationController.create("{\"id\":\"1\",\"cost\":null,\"report\":{\"id\":\"1\",\"isSuccess\":null,\"operationId\":\"1\",\"operationCategories\":null}}");

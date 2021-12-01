@@ -47,6 +47,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         Root<User> root = criteriaQuery.from(User.class);
         root.fetch(User_.userCards, JoinType.INNER);
         root.fetch(User_.userInfo, JoinType.INNER);
+        root.fetch(User_.bankAccount, JoinType.INNER);
         criteriaQuery.select(root);
         criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
 
