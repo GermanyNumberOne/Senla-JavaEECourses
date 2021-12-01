@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "bank_accounts")
 public class BankAccount extends BaseEntity {
 
-    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bankAccount")
     @Column(name = "user_id")
     private List<User> users;
 

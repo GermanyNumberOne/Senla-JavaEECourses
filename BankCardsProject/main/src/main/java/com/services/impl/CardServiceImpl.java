@@ -45,7 +45,6 @@ public class CardServiceImpl implements CardService {
     @Transactional
     public CardDto readCardByNumber(String number){
         Card card = getDefaultDao().findCardByNumber(number);
-        if(card == null)return  null;
 
         return modelMapper.map(card, CardDto.class);
     }
