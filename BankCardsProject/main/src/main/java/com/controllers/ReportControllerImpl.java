@@ -1,45 +1,64 @@
 package com.controllers;
 
-import com.controllers.api.ReportController;
-import com.services.api.ReportService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dto.ReportDto;
+import com.services.api.ReportService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Component
-public class ReportControllerImpl implements ReportController {
+import java.util.List;
+
+@RestController
+@RequestMapping(path = "/reports")
+//@RequiredArgsConstructor
+public class ReportControllerImpl {
     @Autowired
     private ReportService reportService;
-    @Autowired
-    private ObjectMapper objectMapper;
 
-    @Override
-    public void create(String entity) throws JsonProcessingException {
-        reportService.create(convertObject(entity));
+    @RequestMapping(method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> create(@RequestBody ReportDto entity) {
+        reportService.create(entity);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public ReportDto read(Long id) {
-        return reportService.read(id);
+    @RequestMapping(method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ReportDto>> getAll(){
+        List<ReportDto> reports = reportService.getAll();
+
+        if(reports.size() == 0){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(reports);
     }
 
-    public String getMappedObject(Long id) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(reportService.read(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<ReportDto> read(@PathVariable Long id) {
+        ReportDto report = reportService.read(id);
+
+        if(report == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(report);
     }
 
-    public ReportDto convertObject(String object) throws JsonProcessingException {
-        return objectMapper.readValue(object, ReportDto.class);
+    @RequestMapping(method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> update(@RequestBody ReportDto entity) {
+        reportService.update(entity);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public void update(String entity) throws JsonProcessingException {
-        reportService.update(convertObject(entity));
-    }
-
-    @Override
-    public void delete(Long id) {
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         reportService.delete(id);
+        return ResponseEntity.ok().build();
     }
+
 }

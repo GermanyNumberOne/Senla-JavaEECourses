@@ -1,45 +1,63 @@
 package com.controllers;
 
-import com.controllers.api.UserInfoController;
-import com.services.api.UserInfoService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dto.UserInformationDto;
+import com.services.api.UserInfoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Component
-public class UserInfoControllerImpl implements UserInfoController {
+import java.util.List;
+
+@RestController
+@RequestMapping(path = "/users-info")
+public class UserInfoControllerImpl {
     @Autowired
     private UserInfoService userInfoService;
-    @Autowired
-    private ObjectMapper objectMapper;
 
-    @Override
-    public void create(String entity) throws JsonProcessingException {
-        userInfoService.create(convertObject(entity));
+    @RequestMapping(method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> create(@RequestBody UserInformationDto entity) {
+        userInfoService.create(entity);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public UserInformationDto read(Long id) {
-        return userInfoService.read(id);
+    @RequestMapping(method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserInformationDto>> getAll(){
+        List<UserInformationDto> userInfo = userInfoService.getAll();
+
+        if(userInfo.size() == 0){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(userInfo);
     }
 
-    public String getMappedObject(Long id) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(userInfoService.read(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<UserInformationDto> read(@PathVariable Long id) {
+        UserInformationDto userInfo = userInfoService.read(id);
+
+        if(userInfo == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(userInfo);
     }
 
-    public UserInformationDto convertObject(String object) throws JsonProcessingException {
-        return objectMapper.readValue(object, UserInformationDto.class);
+    @RequestMapping(method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> update(@RequestBody UserInformationDto entity) {
+        userInfoService.update(entity);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public void update(String entity) throws JsonProcessingException {
-        userInfoService.update(convertObject(entity));
-    }
 
-    @Override
-    public void delete(Long id) {
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         userInfoService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

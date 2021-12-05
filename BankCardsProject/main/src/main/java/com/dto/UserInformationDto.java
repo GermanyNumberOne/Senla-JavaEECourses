@@ -9,5 +9,7 @@ import lombok.Setter;
 public class UserInformationDto extends AbstractDto {
     private String telephoneNumber;
 
+    private Long userId;
+
     private String address;
 }

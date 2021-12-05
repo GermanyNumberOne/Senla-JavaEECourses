@@ -1,45 +1,67 @@
 package com.controllers;
 
-import com.controllers.api.BankAccountController;
-import com.services.api.BankAccountService;
+import com.dto.BankAccountDto;
+import com.dto.UserDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.dto.BankAccountDto;
+import com.services.api.BankAccountService;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Component
-public class BankAccountControllerImpl implements BankAccountController {
+import java.util.List;
+
+
+@RestController
+@RequestMapping(path = "/bank-accounts")
+public class BankAccountControllerImpl {
     @Autowired
     private BankAccountService bankAccountService;
-    @Autowired
-    private ObjectMapper objectMapper;
 
-    @Override
-    public void create(String entity) throws JsonProcessingException {
-        bankAccountService.create(convertObject(entity));
+    @RequestMapping(method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> create(@RequestBody BankAccountDto dto) {
+        bankAccountService.create(dto);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public BankAccountDto read(Long id) {
-        return bankAccountService.read(id);
+    @RequestMapping(method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<BankAccountDto>> getAll(){
+        List<BankAccountDto> bankAccounts = bankAccountService.getAll();
+
+        if(bankAccounts.size() == 0){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ResponseEntity.ok(bankAccounts);
     }
 
-    public String getMappedObject(Long id) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(bankAccountService.read(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<BankAccountDto> read(@PathVariable Long id) {
+        BankAccountDto bankAccount = bankAccountService.read(id);
+
+        if(bankAccount == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(bankAccount);
     }
 
-    public BankAccountDto convertObject(String object) throws JsonProcessingException {
-        return objectMapper.readValue(object, BankAccountDto.class);
+    @RequestMapping(method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> update(@RequestBody BankAccountDto entity) {
+        bankAccountService.update(entity);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public void update(String entity) throws JsonProcessingException {
-        bankAccountService.update(convertObject(entity));
-    }
-
-    @Override
-    public void delete(Long id) {
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         bankAccountService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

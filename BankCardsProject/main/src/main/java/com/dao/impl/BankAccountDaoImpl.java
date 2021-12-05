@@ -1,47 +1,16 @@
 package com.dao.impl;
 
-import java.util.List;
-import com.dao.DataBase;
 import com.dao.api.BankAccountDao;
 import com.model.BankAccount;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Repository
-public class BankAccountDaoImpl implements BankAccountDao {
-    @Autowired
-    private DataBase dataBase;
-
+public class BankAccountDaoImpl extends AbstractDao<BankAccount> implements BankAccountDao {
     @Override
-    public void create(BankAccount entity) {
-        dataBase.getBankAccounts().add(entity);
-    }
-
-    @Override
-    public BankAccount read(Long id) {
-        return dataBase.getBankAccounts().get(id.intValue());
-    }
-
-    @Override
-    public void update(BankAccount entity) {
-        List<BankAccount> accounts = dataBase.getBankAccounts();
-        int index = -1;
-
-        for(BankAccount account : accounts){
-            if(entity.equals(account)){
-                index = accounts.indexOf(account);
-                break;
-            }
-        }
-
-        if(index >= 0){
-            accounts.set(index, entity);
-        }
-        else create(entity);
-    }
-
-    @Override
-    public void delete(Long id) {
-        dataBase.getBankAccounts().remove(id.intValue());
+    protected Class<BankAccount> getEntityClass() {
+        return BankAccount.class;
     }
 }

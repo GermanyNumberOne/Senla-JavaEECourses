@@ -12,5 +12,7 @@ import java.util.List;
 public class ReportDto extends AbstractDto{
     private Boolean isSuccess;
 
+    private Long operationId;
+
     private List<String> operationCategories;
 }
