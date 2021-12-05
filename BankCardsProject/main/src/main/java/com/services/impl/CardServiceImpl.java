@@ -31,9 +31,9 @@ public class CardServiceImpl implements CardService {
     @Override
     @Transactional
     public CardDto read(Long id) {
-        Card card = getDefaultDao().read(id);
-        if(card == null)return null;
-        return modelMapper.map(card, CardDto.class);
+        Card card = cardDao.read(id);
+
+        return card == null ? null : modelMapper.map(card, CardDto.class);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CardServiceImpl implements CardService {
     public CardDto readCardByNumber(String number){
         Card card = getDefaultDao().findCardByNumber(number);
 
-        return modelMapper.map(card, CardDto.class);
+        return card == null ? null : modelMapper.map(card, CardDto.class);
     }
 
     @Transactional

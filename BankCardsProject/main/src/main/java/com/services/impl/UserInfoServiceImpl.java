@@ -29,7 +29,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     @Transactional
     public UserInformationDto read(Long id) {
-        return modelMapper.map(getDefaultDao().read(id), UserInformationDto.class);
+        UserInformation userInfo = getDefaultDao().read(id);
+
+        return userInfo == null ? null : modelMapper.map(userInfo, UserInformationDto.class);
     }
 
     @Override

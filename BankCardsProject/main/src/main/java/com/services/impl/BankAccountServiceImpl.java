@@ -33,7 +33,9 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     @Transactional
     public BankAccountDto read(Long id) {
-        return modelMapper.map(getDefaultDao().read(id), BankAccountDto.class);
+        BankAccount bankAccount = bankAccountDao.read(id);
+
+        return bankAccount == null ? null : modelMapper.map(bankAccount, BankAccountDto.class);
     }
 
     @Override

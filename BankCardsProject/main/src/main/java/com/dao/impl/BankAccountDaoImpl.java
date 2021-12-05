@@ -14,7 +14,4 @@ public class BankAccountDaoImpl extends AbstractDao<BankAccount> implements Bank
         return BankAccount.class;
     }
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
 }

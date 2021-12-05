@@ -29,7 +29,9 @@ public class OperationServiceImpl implements OperationService {
     @Override
     @Transactional
     public OperationDto read(Long id) {
-        return modelMapper.map(getDefaultDao().read(id), OperationDto.class);
+        Operation operation = operationDao.read(id);
+
+        return operation == null ? null : modelMapper.map(operation, OperationDto.class);
     }
 
     @Override

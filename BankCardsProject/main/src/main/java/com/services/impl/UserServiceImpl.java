@@ -31,9 +31,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto read(Long id) {
-        User user = getDefaultDao().read(id);
-        if(user == null) return null;
-        return modelMapper.map(user, UserDto.class);
+        User user = userDao.read(id);
+
+        return user == null ? null : modelMapper.map(user, UserDto.class);
     }
 
     @Override

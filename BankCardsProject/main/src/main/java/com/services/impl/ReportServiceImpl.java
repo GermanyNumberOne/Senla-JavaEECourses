@@ -29,7 +29,9 @@ public class ReportServiceImpl implements ReportService{
     @Override
     @Transactional
     public ReportDto read(Long id) {
-        return modelMapper.map(getDefaultDao().read(id), ReportDto.class);
+        Report report = reportDao.read(id);
+
+        return report == null ? null : modelMapper.map(report, ReportDto.class);
     }
 
     @Override
