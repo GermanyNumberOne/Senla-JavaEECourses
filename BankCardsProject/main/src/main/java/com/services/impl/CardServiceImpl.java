@@ -55,7 +55,7 @@ public class CardServiceImpl implements CardService {
     public CardDto readCardByNumber(String number) throws NoResultException {
         Card card = cardDao.findCardByNumber(number);
 
-        return modelMapper.map(card, CardDto.class);
+        return card == null ? null : modelMapper.map(card, CardDto.class);
     }
 
     @Transactional

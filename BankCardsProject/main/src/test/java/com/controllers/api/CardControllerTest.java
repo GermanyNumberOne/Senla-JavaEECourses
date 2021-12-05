@@ -88,7 +88,7 @@ class CardControllerTest extends ControllerTest {
     @Test
     void readCardByNumber() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/cards", "number")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.TEXT_PLAIN_VALUE)
                 .param("number", "123");
 
         ResultActions result = mvc.perform(requestBuilder);

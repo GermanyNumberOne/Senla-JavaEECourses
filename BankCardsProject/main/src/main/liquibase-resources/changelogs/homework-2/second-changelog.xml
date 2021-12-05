@@ -66,4 +66,5 @@
                         sequenceName="hibernate_sequence" startValue="0" />
     </changeSet>
 
+
 </databaseChangeLog>

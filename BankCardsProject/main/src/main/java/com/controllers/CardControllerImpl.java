@@ -60,7 +60,9 @@ public class CardControllerImpl {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<CardDto> readCardByNumber(String number){
-        return ResponseEntity.ok(cardService.readCardByNumber(number));
+        CardDto card = cardService.readCardByNumber(number);
+
+        return card == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : ResponseEntity.ok(card);
     }
 
     @RequestMapping(method = RequestMethod.PUT,
