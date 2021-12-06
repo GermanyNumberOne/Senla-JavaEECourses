@@ -8,6 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class BankAccountDto extends AbstractDto {
-    private List<CardDto> cards;
+    private List<UserDto> users;
     private List<OperationDto> operations;
 }

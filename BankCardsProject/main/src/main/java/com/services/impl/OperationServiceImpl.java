@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import com.model.Operation;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,21 +21,27 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
+    @Transactional
     public void create(OperationDto entity) {
         getDefaultDao().create(modelMapper.map(entity, Operation.class));
     }
 
     @Override
+    @Transactional
     public OperationDto read(Long id) {
-        return modelMapper.map(getDefaultDao().read(id), OperationDto.class);
+        Operation operation = operationDao.read(id);
+
+        return operation == null ? null : modelMapper.map(operation, OperationDto.class);
     }
 
     @Override
+    @Transactional
     public void update(OperationDto entity) {
         getDefaultDao().update(modelMapper.map(entity, Operation.class));
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         getDefaultDao().delete(id);
     }

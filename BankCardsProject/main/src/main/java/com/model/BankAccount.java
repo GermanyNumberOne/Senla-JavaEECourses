@@ -1,32 +1,29 @@
 package com.model;
 
+import liquibase.Liquibase;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
 @Component
+@Entity
+@Table(name = "bank_accounts")
 public class BankAccount extends BaseEntity {
 
-    private List<Card> cards;
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
+    @Column(name = "user_id")
+    private List<User> users;
 
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
+    @Column(name = "payment_id")
     private List<Operation> operations;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BankAccount that = (BankAccount) o;
-        return Objects.equals(cards, that.cards) || Objects.equals(operations, that.operations);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cards, operations);
-    }
 }

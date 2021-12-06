@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import com.model.BankAccount;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,21 +25,27 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
+    @Transactional
     public void create(BankAccountDto entity) {
         getDefaultDao().create(modelMapper.map(entity, BankAccount.class));
     }
 
     @Override
+    @Transactional
     public BankAccountDto read(Long id) {
-        return modelMapper.map(getDefaultDao().read(id), BankAccountDto.class);
+        BankAccount bankAccount = bankAccountDao.read(id);
+
+        return bankAccount == null ? null : modelMapper.map(bankAccount, BankAccountDto.class);
     }
 
     @Override
+    @Transactional
     public void update(BankAccountDto entity) {
         getDefaultDao().update(modelMapper.map(entity, BankAccount.class));
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         getDefaultDao().delete(id);
     }
