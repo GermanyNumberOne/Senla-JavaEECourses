@@ -7,30 +7,27 @@ import com.model.UserInformation;
 import com.services.api.UserInfoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class UserInfoServiceImplTest {
 
-    private UserInfoService userInfoService;
+    @InjectMocks
+    private UserInfoServiceImpl userInfoService;
 
     @Mock
     private ModelMapper modelMapper;
 
     @Mock
     private UserInfoDao userInfoDao;
-
-    @BeforeEach
-    void setUp() {
-        modelMapper = mock(ModelMapper.class);
-        userInfoDao = mock(UserInfoDao.class);
-
-        userInfoService = new UserInfoServiceImpl(userInfoDao,modelMapper);
-    }
 
     @Test
     void create() {

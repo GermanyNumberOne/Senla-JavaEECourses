@@ -1,11 +1,15 @@
 package com.dao.api;
 
 import com.dao.impl.UserInfoDaoImpl;
+import com.model.BankAccount;
 import com.model.UserInformation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.NoResultException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,21 +30,30 @@ class UserInfoDaoTest extends DaoTest {
     @Test
     @Transactional
     public void read(){
-        assertTrue(userInfoDao.read(1l) == null);
+        assertThrows(NoResultException.class, () -> {
+            userInfoDao.read(1l);
+        });
     }
 
     @Test
     @Transactional
     public void update(){
-        UserInformation userInfo = new UserInformation();
+        create();
 
-        userInfoDao.update(userInfo);
+        UserInformation userInformation = userInfoDao.getAll().get(0);
+        userInformation.setAddress("ger");
+
+        userInfoDao.update(userInformation);
+
+        assertTrue(userInfoDao.getAll().size() == 1);
     }
 
     @Test
     @Transactional
     public void delete(){
-        userInfoDao.delete(1l);
+        assertThrows(NoResultException.class, () -> {
+            userInfoDao.delete(1l);
+        });
     }
 
 }

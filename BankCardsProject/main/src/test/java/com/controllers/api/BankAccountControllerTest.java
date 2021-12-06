@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -74,7 +75,7 @@ class BankAccountControllerTest extends ControllerTest{
                 .contentType(MediaType.APPLICATION_JSON_VALUE);
 
         ResultActions result = mvc.perform(requestBuilder);
-        MvcResult mvcResult = result.andExpect(MockMvcResultMatchers.status().isOk())
+        MvcResult mvcResult = result.andExpect(MockMvcResultMatchers.status().isNoContent())
                 .andDo((MockMvcResultHandlers.print()))
                 .andReturn();
     }

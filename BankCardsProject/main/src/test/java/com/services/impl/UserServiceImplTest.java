@@ -3,34 +3,28 @@ package com.services.impl;
 import com.dao.api.UserDao;
 import com.dto.UserDto;
 import com.model.User;
-import com.services.api.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.atLeastOnce;
 
+@ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-    private UserService userService;
+    @InjectMocks
+    private UserServiceImpl userService;
 
     @Mock
     private ModelMapper modelMapper;
 
     @Mock
     private UserDao userDao;
-
-    @BeforeEach
-    void setUp() {
-        modelMapper = mock(ModelMapper.class);
-        userDao = mock(UserDao.class);
-
-        userService = new UserServiceImpl(userDao,modelMapper);
-    }
 
     @Test
     void create() {

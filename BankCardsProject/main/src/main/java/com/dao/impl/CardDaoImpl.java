@@ -21,13 +21,17 @@ public class CardDaoImpl extends AbstractDao<Card> implements CardDao {
         return Card.class;
     }
 
-
     public Card findCardByNumber(String number) throws NoResultException {
         return entityManager.createQuery("select c from Card c where c.number = :number", Card.class)
-                .setParameter("number", number).getSingleResult();
+                .setParameter("number", number)
+                .getSingleResult();
     }
 
-    public void deleteCardByNumber(String number){
-        entityManager.createQuery("delete from Card c where c.number = :number").setParameter("number", number);
+    public void deleteCardByNumber(String number) throws NoResultException {
+        Card card = findCardByNumber(number);
+
+        entityManager.createQuery("delete from Card c where c.number = :number")
+                .setParameter("number", number)
+                .executeUpdate();
     }
 }

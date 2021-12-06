@@ -1,11 +1,15 @@
 package com.dao.api;
 
 import com.dao.impl.ReportDaoImpl;
+import com.model.BankAccount;
 import com.model.Report;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.NoResultException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,21 +29,30 @@ class ReportDaoTest extends DaoTest {
     @Test
     @Transactional
     public void read(){
-        assertTrue(reportDao.read(1l) == null);
+        assertThrows(NoResultException.class, () -> {
+            reportDao.read(1l);
+        });
     }
 
     @Test
     @Transactional
     public void update(){
-        Report report = new Report();
+        create();
+
+        Report report = reportDao.getAll().get(0);
+        report.setIsSuccess(true);
 
         reportDao.update(report);
+
+        assertTrue(reportDao.getAll().size() == 1);
     }
 
     @Test
     @Transactional
     public void delete(){
-        reportDao.delete(1l);
+        assertThrows(NoResultException.class, () -> {
+            reportDao.delete(1l);
+        });
     }
 
 }

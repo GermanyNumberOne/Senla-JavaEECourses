@@ -6,30 +6,27 @@ import com.model.Operation;
 import com.services.api.OperationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class OperationServiceImplTest {
 
-    private OperationService operationService;
+    @InjectMocks
+    private OperationServiceImpl operationService;
 
     @Mock
     private ModelMapper modelMapper;
 
     @Mock
     private OperationDao operationDao;
-
-    @BeforeEach
-    void setUp() {
-        modelMapper = mock(ModelMapper.class);
-        operationDao = mock(OperationDao.class);
-
-        operationService = new OperationServiceImpl(operationDao,modelMapper);
-    }
 
     @Test
     void create() {

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,29 +23,45 @@ class BankAccountDaoTest extends DaoTest {
     public void create(){
         BankAccount bankAccount = new BankAccount();
 
-
         bankAccountDao.create(bankAccount);
     }
 
     @Test
     @Transactional
+    public void getAll(){
+        assertThrows(NoResultException.class, () -> {
+           bankAccountDao.getAll();
+        });
+    }
+
+    @Test
+    @Transactional
     public void read(){
-        assertTrue(bankAccountDao.read(1l) == null);
+        assertThrows(NoResultException.class, () -> {
+            bankAccountDao.read(1l);
+        });
+
     }
 
     @Test
     @Transactional
     public void update(){
-        BankAccount bankAccount = new BankAccount();
+        create();
 
+        BankAccount bankAccount = bankAccountDao.getAll().get(0);
+        bankAccount.setOperations(new ArrayList<>());
 
         bankAccountDao.update(bankAccount);
+
+        assertTrue(bankAccountDao.getAll().size() == 1);
     }
 
     @Test
     @Transactional
     public void delete(){
-        bankAccountDao.delete(1l);
+        assertThrows(NoResultException.class, () -> {
+            bankAccountDao.delete(1l);
+        });
     }
 
 }

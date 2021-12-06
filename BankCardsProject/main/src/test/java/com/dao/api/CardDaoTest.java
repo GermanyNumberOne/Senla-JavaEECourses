@@ -1,6 +1,7 @@
 package com.dao.api;
 
 import com.dao.impl.CardDaoImpl;
+import com.model.BankAccount;
 import com.model.Card;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,25 +31,34 @@ class CardDaoTest extends DaoTest {
     @Test
     @Transactional
     public void read(){
-        assertTrue(cardDao.read(1l) == null);
+        assertThrows(NoResultException.class, () -> {
+            cardDao.read(1l);
+        });
     }
 
     @Test
     @Transactional
     public void update(){
-        Card card = new Card();
-        card.setNumber("1234");
+        create();
+
+        Card card = cardDao.getAll().get(0);
+        card.setPassword((short)123);
 
         cardDao.update(card);
+
+        assertTrue(cardDao.getAll().size() == 1);
     }
 
     @Test
     @Transactional
     public void delete(){
-        cardDao.delete(1l);
+        assertThrows(NoResultException.class, () -> {
+            cardDao.delete(1l);
+        });
     }
 
     @Test
+    @Transactional
     void findCardByNumber() {
         assertThrows(NoResultException.class, () -> {
             cardDao.findCardByNumber("123");
@@ -55,8 +67,11 @@ class CardDaoTest extends DaoTest {
     }
 
     @Test
+    @Transactional
     void deleteCardByNumber() {
-        cardDao.deleteCardByNumber("123");
+        assertThrows(NoResultException.class, () -> {
+           cardDao.deleteCardByNumber("123");
+        });
     }
 
 }

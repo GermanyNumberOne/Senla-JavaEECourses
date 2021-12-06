@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,22 +34,30 @@ class OperationDaoTest extends DaoTest {
     @Test
     @Transactional
     public void read(){
-        assertNull(operationDao.read(1l));
+        assertThrows(NoResultException.class, () -> {
+            operationDao.read(1l);
+        });
     }
 
     @Test
     @Transactional
     public void update(){
-        Operation operation = new Operation();
+        create();
+
+        Operation operation = operationDao.getAll().get(0);
         operation.setCost(123l);
 
         operationDao.update(operation);
+
+        assertTrue(operationDao.getAll().size() == 1);
     }
 
     @Test
     @Transactional
     public void delete(){
-        operationDao.delete(1l);
+        assertThrows(NoResultException.class, () -> {
+            operationDao.delete(1l);
+        });
     }
 
 }

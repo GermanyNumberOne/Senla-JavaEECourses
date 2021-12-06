@@ -6,30 +6,26 @@ import com.model.Card;
 import com.services.api.CardService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class CardServiceImplTest {
-
-    private CardService cardService;
-
     @Mock
     private CardDao cardDao;
 
     @Mock
     private ModelMapper modelMapper;
 
-    @BeforeEach
-    void setUp() {
-        modelMapper = mock(ModelMapper.class);
-        cardDao = mock(CardDao.class);
-
-        cardService = new CardServiceImpl(cardDao,modelMapper);
-    }
+    @InjectMocks
+    private CardServiceImpl cardService;
 
     @Test
     void getAll() {

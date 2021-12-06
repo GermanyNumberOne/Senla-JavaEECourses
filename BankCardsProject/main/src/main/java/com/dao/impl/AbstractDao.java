@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -16,14 +17,12 @@ import java.util.logging.Logger;
 
 @Component
 public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
-
     @PersistenceContext
     protected EntityManager entityManager;
 
     protected abstract Class<T> getEntityClass();
 
     private final Logger logger = Logger.getLogger(AbstractDao.class.getName());
-
 
     public List<T> getAll(){
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -32,7 +31,11 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
         CriteriaQuery<T> all = cq.select(root);
 
         TypedQuery<T> allQuery = entityManager.createQuery(all);
-        return allQuery.getResultList();
+        List<T> list = allQuery.getResultList();
+        if(list.isEmpty()){
+            throw new NoResultException("there are no entities");
+        }
+        return list;
     }
 
     @Override
@@ -46,11 +49,12 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     }
 
     @Override
-    public T read(Long id) {
+    public T read(Long id){
         T object = entityManager.find(getEntityClass(), id);
 
         if(object == null){
             logger.info(getEntityClass().getName() + "Dao: read method: no such entity");
+            throw new NoResultException("no such entity");
         }
 
        return object;
@@ -69,7 +73,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
 
         if(object == null){
             logger.info(getEntityClass().getName() + "Dao" + ": delete method: no such entity");
-            return;
+            throw new NoResultException("no such entity");
         }
 
         entityManager.remove(object);

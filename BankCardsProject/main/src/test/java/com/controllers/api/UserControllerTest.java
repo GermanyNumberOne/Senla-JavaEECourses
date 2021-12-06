@@ -73,7 +73,7 @@ class UserControllerTest extends ControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE);
 
         ResultActions result = mvc.perform(requestBuilder);
-        MvcResult mvcResult = result.andExpect(MockMvcResultMatchers.status().isOk())
+        MvcResult mvcResult = result.andExpect(MockMvcResultMatchers.status().isNoContent())
                 .andDo((MockMvcResultHandlers.print()))
                 .andReturn();
     }

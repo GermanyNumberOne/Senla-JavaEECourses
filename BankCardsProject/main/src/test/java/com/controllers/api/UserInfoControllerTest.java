@@ -12,8 +12,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class UserInfoControllerTest extends ControllerTest{
     @Test
     public void create() throws Exception {
@@ -67,7 +65,7 @@ class UserInfoControllerTest extends ControllerTest{
                 .contentType(MediaType.APPLICATION_JSON_VALUE);
 
         ResultActions result = mvc.perform(requestBuilder);
-        MvcResult mvcResult = result.andExpect(MockMvcResultMatchers.status().isOk())
+        MvcResult mvcResult = result.andExpect(MockMvcResultMatchers.status().isNoContent())
                 .andDo((MockMvcResultHandlers.print()))
                 .andReturn();
     }
