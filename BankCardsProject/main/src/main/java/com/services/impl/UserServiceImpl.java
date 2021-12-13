@@ -1,17 +1,14 @@
 package com.services.impl;
 
-import com.dto.BankAccountDto;
-import com.dto.OperationDto;
-import com.services.api.UserService;
 import com.dao.api.UserDao;
 import com.dto.UserDto;
-import lombok.RequiredArgsConstructor;
 import com.model.User;
+import com.services.api.UserService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

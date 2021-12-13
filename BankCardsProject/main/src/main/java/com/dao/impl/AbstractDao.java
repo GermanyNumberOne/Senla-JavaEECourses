@@ -3,7 +3,6 @@ package com.dao.impl;
 import com.dao.api.Dao;
 import com.model.BaseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

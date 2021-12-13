@@ -6,8 +6,6 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter

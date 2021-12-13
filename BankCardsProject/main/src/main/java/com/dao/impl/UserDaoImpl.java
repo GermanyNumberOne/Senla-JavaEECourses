@@ -3,17 +3,11 @@ package com.dao.impl;
 
 import com.dao.api.UserDao;
 import com.model.User;
-import com.model.User_;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.persistence.EntityGraph;
+import javax.persistence.NoResultException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 

@@ -1,6 +1,5 @@
 package com.dao.api;
 
-import com.dto.UserDto;
 import com.model.BaseEntity;
 
 import java.util.List;

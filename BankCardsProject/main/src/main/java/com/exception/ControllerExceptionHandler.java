@@ -14,10 +14,7 @@ import java.util.logging.Logger;
 @RestControllerAdvice
 public class ControllerExceptionHandler {
     private final Logger logger = Logger.getLogger(ControllerExceptionHandler.class.getName());
-/*
-    @ExceptionHandler(EntityAlreadyExists.class)
-    @ResponseStatus(value = HttpStatus.)
-*/
+
     @ExceptionHandler(NoResultException.class)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public ErrorMessage noResultExceptionHandler(NoResultException e, WebRequest request){
