@@ -14,5 +14,4 @@ public class CardDto extends AbstractDto {
     private Long money;
 
     private Long userId;
-
 }

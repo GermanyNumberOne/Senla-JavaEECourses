@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
@@ -16,11 +13,10 @@ import java.util.List;
 @Entity
 @Table(name = "bank_accounts")
 public class BankAccount extends BaseEntity {
-
     @OneToMany(mappedBy = "bankAccount",cascade = CascadeType.ALL)
     private List<User> users;
 
-    @OneToMany(mappedBy = "bankAccount",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
     private List<Operation> operations;
 
 }

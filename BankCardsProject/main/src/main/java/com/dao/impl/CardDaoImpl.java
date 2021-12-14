@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 
-
 @Repository
 public class CardDaoImpl extends AbstractDao<Card> implements CardDao {
     @Override

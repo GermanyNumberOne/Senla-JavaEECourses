@@ -10,7 +10,6 @@ import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @Repository
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override

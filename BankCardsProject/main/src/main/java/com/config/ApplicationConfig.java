@@ -3,10 +3,7 @@ package com.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -15,7 +12,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -25,6 +21,8 @@ import java.util.Properties;
 @EnableWebMvc
 @PropertySource("classpath:application.properties")
 @ComponentScan("com")
+@EnableAspectJAutoProxy
+@PropertySource("classpath:application.properties")
 public class ApplicationConfig {
     @Value("${database.driver}")
     private String dbDriver;
@@ -60,6 +58,16 @@ public class ApplicationConfig {
         return  jpaTransactionManager;
     }
 
+    public Properties additionalJPAProperties() {
+        Properties properties = new Properties();
+
+        properties.setProperty("hibernate.hdb2ddl.auto", hdb2ddlAuto);
+        properties.setProperty("hibernate.show_sql", showSql);
+        properties.setProperty("hibernate.dialect", hibernateDialect);
+
+        return properties;
+    }
+
     @Bean
     public LocalContainerEntityManagerFactoryBean getLocalContainerEntityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -71,16 +79,6 @@ public class ApplicationConfig {
         localContainerEntityManagerFactoryBean.setJpaProperties(additionalJPAProperties());
 
         return localContainerEntityManagerFactoryBean;
-    }
-
-    public Properties additionalJPAProperties() {
-        Properties properties = new Properties();
-
-        properties.setProperty("hibernate.hdb2ddl.auto", hdb2ddlAuto);
-        properties.setProperty("hibernate.show_sql", showSql);
-        properties.setProperty("hibernate.dialect", hibernateDialect);
-
-        return properties;
     }
 
     @Bean

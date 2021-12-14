@@ -58,7 +58,4 @@ public class UserControllerImpl {
         userService.delete(id);
         return ResponseEntity.ok().build();
     }
-
-
-
 }
