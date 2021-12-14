@@ -17,4 +17,10 @@ public class UserDto extends AbstractDto {
     private List<CardDto> userCards;
 
     private UserInformationDto userInfo;
+
+    private String login;
+
+    private String password;
+
+    private List<RoleDto> roles;
 }

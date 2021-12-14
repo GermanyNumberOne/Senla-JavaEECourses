@@ -1,5 +1,8 @@
 package com.services.impl;
 
+import com.dto.BankAccountDto;
+import com.dto.UserInformationDto;
+import com.model.UserInformation;
 import com.services.api.OperationService;
 import com.dao.api.OperationDao;
 import com.dto.OperationDto;
@@ -9,6 +12,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class OperationServiceImpl implements OperationService {
@@ -16,14 +23,16 @@ public class OperationServiceImpl implements OperationService {
 
     private final ModelMapper modelMapper;
 
-    protected OperationDao getDefaultDao() {
-        return operationDao;
+    @Override
+    @Transactional
+    public List<OperationDto> getAll(){
+        return operationDao.getAll().stream().map(value -> modelMapper.map(value, OperationDto.class)).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void create(OperationDto entity) {
-        getDefaultDao().create(modelMapper.map(entity, Operation.class));
+        operationDao.create(modelMapper.map(entity, Operation.class));
     }
 
     @Override
@@ -37,12 +46,12 @@ public class OperationServiceImpl implements OperationService {
     @Override
     @Transactional
     public void update(OperationDto entity) {
-        getDefaultDao().update(modelMapper.map(entity, Operation.class));
+        operationDao.update(modelMapper.map(entity, Operation.class));
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        getDefaultDao().delete(id);
+        operationDao.delete(id);
     }
 }

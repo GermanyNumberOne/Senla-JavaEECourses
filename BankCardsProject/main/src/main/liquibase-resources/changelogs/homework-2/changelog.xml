@@ -56,4 +56,29 @@
     <changeSet id="homework-2-create-index-on-user_information-table" author="I">
         <sqlFile encoding="utf8" path="./sql/12.create-index-on-user_information-table.sql" relativeToChangelogFile="true"/>
     </changeSet>
+
+    <changeSet id="adding-roles-table" author="I">
+        <createTable tableName="roles">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="role_name" type="varchar(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="adding-users_roles-table" author="I">
+        <createTable tableName="users_roles">
+            <column name="id" type="integer">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="integer">
+                <constraints foreignKeyName="fk_user_id" references="users(id)"/>
+            </column>
+            <column name="role_id" type="integer">
+                <constraints foreignKeyName="fk_role_id" references="roles(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog> 

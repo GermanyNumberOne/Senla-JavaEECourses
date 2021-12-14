@@ -3,17 +3,13 @@ package com.dao.impl;
 
 import com.dao.api.UserDao;
 import com.model.User;
-import com.model.User_;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.persistence.EntityGraph;
+import javax.persistence.NoResultException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -25,40 +21,31 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return User.class;
     }
 
-    public List<User> findUserByNameByJPQL(String name){
-        Query query = entityManager.createQuery("select u from User u where u.firstname = :name");
-        query.setParameter("name", name);
-        return query.getResultList();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public void create(User entity) {
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        super.create(entity);
     }
 
-
-    public User findUserByIdByJPQL(Long id){
-        return entityManager.createQuery("SELECT user FROM User user JOIN FETCH user.userCards cards" +
-                    " JOIN FETCH user.userInfo info" +
-                    " JOIN FETCH user.bankAccount" +
-                    " where user.id = :id", User.class)
-                .setParameter("id", id)
-                .getSingleResult();
-    }
-
-    public User findUserByIdByCriteria(Long id){
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-        Root<User> root = criteriaQuery.from(User.class);
-        root.fetch(User_.userCards, JoinType.INNER);
-        root.fetch(User_.userInfo, JoinType.INNER);
-        root.fetch(User_.bankAccount, JoinType.INNER);
-        criteriaQuery.select(root);
-        criteriaQuery.where(criteriaBuilder.equal(root.get("id"), id));
-
-        return entityManager.createQuery(criteriaQuery).getSingleResult();
-    }
-
-    public User findUserByIdByEntityGraph(Long id){
+    public User findUserByIdByEntityGraph(Long id) {
         EntityGraph graph = entityManager.createEntityGraph("graph.User");
         Map hints = new HashMap();
         hints.put("javax.persistence.fetchgraph", graph);
 
-        return entityManager.find(User.class, id, hints);
+        User user = entityManager.find(User.class, id, hints);
+
+        if(user == null) throw new NoResultException("no such entity");
+
+        return user;
+    }
+
+    @Override
+    public User getUserByLogin(String login) throws NoResultException {
+        return entityManager.createQuery("select user from User user where user.login = :login", User.class)
+                .setParameter("login", login)
+                .getSingleResult();
     }
 }

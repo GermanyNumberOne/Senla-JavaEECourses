@@ -4,4 +4,4 @@ CREATE TABLE cards (
     money integer,
     user_id integer,
     foreign key (user_id) REFERENCES users (id)
-)
+);

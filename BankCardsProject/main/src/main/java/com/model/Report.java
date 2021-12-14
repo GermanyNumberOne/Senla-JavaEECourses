@@ -19,11 +19,11 @@ public class Report extends BaseEntity {
     @Column(name = "is_success")
     private Boolean isSuccess;
 
-    @OneToOne
-    @JoinColumn(name = "operation_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "operation_id", referencedColumnName = "id")
     private Operation operation;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "operation_category_id")
     private OperationCategories operationCategory;
 

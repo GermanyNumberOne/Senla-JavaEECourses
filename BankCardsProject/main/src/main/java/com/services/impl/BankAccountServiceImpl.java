@@ -1,5 +1,9 @@
 package com.services.impl;
 
+import com.dto.CardDto;
+import com.dto.OperationDto;
+import com.model.Card;
+import com.model.UserInformation;
 import com.services.api.BankAccountService;
 import com.dao.api.BankAccountDao;
 import com.dto.BankAccountDto;
@@ -9,6 +13,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class BankAccountServiceImpl implements BankAccountService {
@@ -16,22 +24,20 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     private final ModelMapper modelMapper;
 
-    protected ModelMapper getModelMapper(){
-        return modelMapper;
-    }
 
-    protected BankAccountDao getDefaultDao() {
-        return bankAccountDao;
+    @Override
+    @Transactional
+    public List<BankAccountDto> getAll(){
+        return bankAccountDao.getAll().stream().map(value -> modelMapper.map(value, BankAccountDto.class)).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void create(BankAccountDto entity) {
-        getDefaultDao().create(modelMapper.map(entity, BankAccount.class));
+        bankAccountDao.create(modelMapper.map(entity, BankAccount.class));
     }
 
     @Override
-    @Transactional
     public BankAccountDto read(Long id) {
         BankAccount bankAccount = bankAccountDao.read(id);
 
@@ -41,12 +47,12 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     @Transactional
     public void update(BankAccountDto entity) {
-        getDefaultDao().update(modelMapper.map(entity, BankAccount.class));
+        bankAccountDao.update(modelMapper.map(entity, BankAccount.class));
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        getDefaultDao().delete(id);
+        bankAccountDao.delete(id);
     }
 }

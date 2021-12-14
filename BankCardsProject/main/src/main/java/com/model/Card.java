@@ -2,7 +2,6 @@ package com.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -17,8 +16,10 @@ public class Card extends BaseEntity {
     @Column(name = "card_number")
     private String number;
 
+    @Column(name = "password")
     private Short password;
 
+    @Column(name = "money")
     private Long money;
 
     @ManyToOne(fetch = FetchType.LAZY)

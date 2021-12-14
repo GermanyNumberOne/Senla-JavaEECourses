@@ -18,11 +18,10 @@ public class Operation extends BaseEntity {
     private Long cost;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bank_account_id")
+    @JoinColumn(name = "bank_account_id", referencedColumnName = "id")
     private BankAccount bankAccount;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @OneToOne(mappedBy = "operation",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Report report;
 
 }

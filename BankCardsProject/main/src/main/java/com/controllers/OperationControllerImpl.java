@@ -1,45 +1,61 @@
 package com.controllers;
 
-import com.controllers.api.OperationController;
-import com.services.api.OperationService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dto.OperationDto;
+import com.dto.ReportDto;
+import com.services.api.OperationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Component
-public class OperationControllerImpl implements OperationController {
+import java.util.List;
+
+@RestController
+@RequestMapping(path = "/operations")
+//@RequiredArgsConstructor
+public class OperationControllerImpl {
     @Autowired
     private OperationService operationService;
-    @Autowired
-    private ObjectMapper objectMapper;
 
-    @Override
-    public void create(String entity) throws JsonProcessingException {
-        operationService.create(convertObject(entity));
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> create(@RequestBody OperationDto entity) {
+        operationService.create(entity);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public OperationDto read(Long id) {
-        return operationService.read(id);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<OperationDto>> getAll(){
+        List<OperationDto> operations = operationService.getAll();
+
+        if(operations.size() == 0){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(operations);
     }
 
-    public String getMappedObject(Long id) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(operationService.read(id));
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OperationDto> read(@PathVariable Long id) {
+        OperationDto operation = operationService.read(id);
+
+        if(operation == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(operation);
     }
 
-    public OperationDto convertObject(String object) throws JsonProcessingException {
-        return objectMapper.readValue(object, OperationDto.class);
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> update(@RequestBody OperationDto entity) {
+        operationService.update(entity);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public void update(String entity) throws JsonProcessingException {
-        operationService.update(convertObject(entity));
-    }
-
-    @Override
-    public void delete(Long id) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         operationService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

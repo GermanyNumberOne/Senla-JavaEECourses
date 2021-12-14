@@ -1,5 +1,10 @@
 package com.services.impl;
 
+import com.dto.BankAccountDto;
+import com.dto.OperationDto;
+import com.dto.UserDto;
+import com.model.User;
+import com.model.UserInformation;
 import com.services.api.ReportService;
 import com.dao.api.ReportDao;
 import com.dto.ReportDto;
@@ -9,6 +14,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService{
@@ -16,14 +25,17 @@ public class ReportServiceImpl implements ReportService{
 
     private final ModelMapper modelMapper;
 
-    protected ReportDao getDefaultDao() {
-        return reportDao;
+
+    @Override
+    @Transactional
+    public List<ReportDto> getAll(){
+        return reportDao.getAll().stream().map(value -> modelMapper.map(value, ReportDto.class)).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void create(ReportDto entity) {
-        getDefaultDao().create(modelMapper.map(entity, Report.class));
+        reportDao.create(modelMapper.map(entity, Report.class));
     }
 
     @Override
@@ -37,12 +49,12 @@ public class ReportServiceImpl implements ReportService{
     @Override
     @Transactional
     public void update(ReportDto entity) {
-        getDefaultDao().update(modelMapper.map(entity, Report.class));
+        reportDao.update(modelMapper.map(entity, Report.class));
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        getDefaultDao().delete(id);
+        reportDao.delete(id);
     }
 }

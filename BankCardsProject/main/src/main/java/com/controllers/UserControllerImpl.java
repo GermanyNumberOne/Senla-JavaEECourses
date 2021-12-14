@@ -1,62 +1,58 @@
 package com.controllers;
 
-import com.controllers.api.UserController;
-import com.services.api.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dto.UserDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.services.api.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Component
-public class UserControllerImpl implements UserController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ObjectMapper objectMapper;
+import java.util.List;
 
-    @Override
-    public void create(String entity) throws JsonProcessingException {
-        userService.create(convertObject(entity));
+@RestController
+@RequestMapping(path = "/users")
+@RequiredArgsConstructor
+public class UserControllerImpl {
+    private final UserService userService;
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> create(@RequestBody UserDto dto) {
+        userService.create(dto);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public UserDto read(Long id) {
-        return userService.read(id);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserDto>> getAll(){
+        List<UserDto> users = userService.getAll();
+
+        if(users.size() == 0){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(users);
     }
 
-    public String getMappedObject(Long id) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(userService.read(id));
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDto> read(@PathVariable Long id) {
+        UserDto user = userService.read(id);
+
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(user);
     }
 
-    public UserDto convertObject(String object) throws JsonProcessingException {
-        return objectMapper.readValue(object, UserDto.class);
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> update(@RequestBody UserDto entity) {
+        userService.update(entity);
+        return ResponseEntity.ok().build();
     }
 
-    @Override
-    public void update(String entity) throws JsonProcessingException {
-        userService.update(convertObject(entity));
-    }
-
-    @Override
-    public void delete(Long id) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.delete(id);
+        return ResponseEntity.ok().build();
     }
-
-    public String findUserByIdByJPQL(Long id) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(userService.findUserByIdByJPQL(id));
-    }
-
-    public String findUserByIdByCriteria(Long id) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(userService.findUserByIdByCriteria(id));
-    }
-
-    public String findUserByIdByEntityGraph(Long id) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(userService.findUserByIdByEntityGraph(id));
-    }
-
-     public UserDto readUserByName(String name){
-        return userService.readUserByName(name);
-    }
-
 }

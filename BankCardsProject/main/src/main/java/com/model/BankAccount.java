@@ -18,12 +18,12 @@ import java.util.List;
 @Table(name = "bank_accounts")
 public class BankAccount extends BaseEntity {
 
-    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
-    @Column(name = "user_id")
+    @OneToMany(mappedBy = "bankAccount",cascade = CascadeType.ALL)
+    //@JoinColumn(name = "user_id", referencedColumnName = "id")
     private List<User> users;
 
-    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
-    @Column(name = "payment_id")
+    @OneToMany(mappedBy = "bankAccount",cascade = CascadeType.ALL)
+    //@JoinColumn(name = "payment_id", referencedColumnName = "id")
     private List<Operation> operations;
 
 }
