@@ -1,5 +1,7 @@
 package com.config.security;
 
+import com.exception.MyAuthenticationExceptionEntryPoint;
+import com.exception.ExceptionHandlerFilter;
 import com.jwt.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtTokenFilter jwtTokenFilter;
 
     @Autowired
+    private ExceptionHandlerFilter exceptionHandlerFilter;
+
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
@@ -43,7 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                .exceptionHandling().authenticationEntryPoint(new MyAuthenticationExceptionEntryPoint())
+                .and()
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(exceptionHandlerFilter, JwtTokenFilter.class);
+
     }
 
     @Override

@@ -70,7 +70,7 @@
 
     <changeSet id="adding-users_roles-table" author="I">
         <createTable tableName="users_roles">
-            <column name="id" type="integer">
+            <column name="id" type="integer" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
             <column name="user_id" type="integer">

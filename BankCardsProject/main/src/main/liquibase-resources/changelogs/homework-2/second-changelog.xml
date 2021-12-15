@@ -100,6 +100,7 @@
         </dropColumn>
     </changeSet>
 
+    <!--
     <changeSet id="insert-default-roles-in-roles-table" author="">
         <insert tableName="roles">
             <column name="role_name" value="ROLE_ADMIN"></column>
@@ -108,6 +109,7 @@
             <column name="role_name" value="ROLE_USER"></column>
         </insert>
     </changeSet>
+    -->
 <!--
     <changeSet author="I"
                id="createSequence-example">
