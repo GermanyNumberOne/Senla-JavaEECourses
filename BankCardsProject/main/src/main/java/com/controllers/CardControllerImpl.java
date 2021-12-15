@@ -2,7 +2,6 @@ package com.controllers;
 
 import com.dto.CardDto;
 import com.services.api.CardService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +24,7 @@ public class CardControllerImpl {
         return ResponseEntity.ok().build();
     }
 
-    @Secured({"ROLE_USER"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CardDto>> getAll(){
         List<CardDto> cards = cardService.getAll();
@@ -72,4 +71,5 @@ public class CardControllerImpl {
         cardService.delete(id);
         return ResponseEntity.ok().build();
     }
+
 }

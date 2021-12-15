@@ -3,8 +3,6 @@ package com.dao.impl;
 import com.dao.api.Dao;
 import com.model.BaseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -48,6 +46,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
         }
     }
 
+
     @Override
     public T read(Long id){
         T object = entityManager.find(getEntityClass(), id);
@@ -64,7 +63,6 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     public void update(T entity) {
         entityManager.merge(entity);
         entityManager.flush();
-        logger.info("entity has been updated");
     }
 
     @Override

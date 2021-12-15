@@ -1,9 +1,7 @@
 package com.controllers;
 
 import com.dto.OperationDto;
-import com.dto.ReportDto;
 import com.services.api.OperationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/operations")
-//@RequiredArgsConstructor
 public class OperationControllerImpl {
     @Autowired
     private OperationService operationService;

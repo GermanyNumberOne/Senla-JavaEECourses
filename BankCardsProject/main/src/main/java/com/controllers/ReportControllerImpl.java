@@ -2,7 +2,6 @@ package com.controllers;
 
 import com.dto.ReportDto;
 import com.services.api.ReportService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/reports")
-//@RequiredArgsConstructor
 public class ReportControllerImpl {
     @Autowired
     private ReportService reportService;

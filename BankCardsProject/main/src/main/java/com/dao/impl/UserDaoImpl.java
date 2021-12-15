@@ -1,21 +1,17 @@
 package com.dao.impl;
 
-
 import com.dao.api.UserDao;
 import com.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityGraph;
 import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @Repository
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
-
     @Override
     protected Class<User> getEntityClass() {
         return User.class;
@@ -30,6 +26,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         super.create(entity);
     }
 
+    @Override
     public User findUserByIdByEntityGraph(Long id) {
         EntityGraph graph = entityManager.createEntityGraph("graph.User");
         Map hints = new HashMap();
@@ -40,6 +37,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         if(user == null) throw new NoResultException("no such entity");
 
         return user;
+
     }
 
     @Override

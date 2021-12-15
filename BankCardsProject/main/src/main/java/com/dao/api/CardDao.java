@@ -1,6 +1,7 @@
 package com.dao.api;
 
 import com.model.Card;
+import javax.persistence.NoResultException;
 
 import javax.persistence.NoResultException;
 

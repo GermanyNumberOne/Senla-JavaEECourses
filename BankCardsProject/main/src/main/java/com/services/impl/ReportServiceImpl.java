@@ -1,18 +1,28 @@
 package com.services.impl;
 
+<<<<<<< HEAD
 import com.dto.BankAccountDto;
 import com.dto.OperationDto;
 import com.dto.UserDto;
 import com.model.User;
 import com.model.UserInformation;
 import com.services.api.ReportService;
+=======
+>>>>>>> origin
 import com.dao.api.ReportDao;
 import com.dto.ReportDto;
-import lombok.RequiredArgsConstructor;
 import com.model.Report;
+import com.services.api.ReportService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+<<<<<<< HEAD
+
+import java.util.List;
+import java.util.stream.Collectors;
+=======
+>>>>>>> origin
 
 import java.util.ArrayList;
 import java.util.List;

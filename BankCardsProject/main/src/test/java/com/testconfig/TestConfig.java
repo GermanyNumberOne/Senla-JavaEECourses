@@ -101,5 +101,4 @@ public class TestConfig {
 
         return properties;
     }
-
 }
