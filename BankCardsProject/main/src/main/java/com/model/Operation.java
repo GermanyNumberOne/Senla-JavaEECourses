@@ -21,7 +21,6 @@ public class Operation extends BaseEntity {
     private BankAccount bankAccount;
 
     @OneToOne(mappedBy = "operation",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JoinColumn(name = "report_id", referencedColumnName = "id")
     private Report report;
 
 }

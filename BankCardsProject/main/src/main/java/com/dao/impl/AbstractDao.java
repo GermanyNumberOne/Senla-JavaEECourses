@@ -22,7 +22,6 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
 
     private final Logger logger = Logger.getLogger(AbstractDao.class.getName());
 
-
     public List<T> getAll(){
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(getEntityClass());
@@ -39,7 +38,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
 
     @Override
     public void create(T entity) {
-        if (!entityManager.contains(entity)) {
+        if(!entityManager.contains(entity)){
             entityManager.persist(entity);
             entityManager.flush();
 
@@ -48,6 +47,7 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     }
 
 
+    @Override
     public T read(Long id){
         T object = entityManager.find(getEntityClass(), id);
 
@@ -63,8 +63,6 @@ public abstract class AbstractDao<T extends BaseEntity> implements Dao<T> {
     public void update(T entity) {
         entityManager.merge(entity);
         entityManager.flush();
-        logger.info("entity has been updated");
-
     }
 
     @Override

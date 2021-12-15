@@ -1,5 +1,6 @@
 package com.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +15,5 @@ public class CardDto extends AbstractDto {
     private Long money;
 
     private Long userId;
+
 }

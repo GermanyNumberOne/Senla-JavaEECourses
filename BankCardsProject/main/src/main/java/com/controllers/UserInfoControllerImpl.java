@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -16,15 +15,13 @@ public class UserInfoControllerImpl {
     @Autowired
     private UserInfoService userInfoService;
 
-    @RequestMapping(method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@RequestBody UserInformationDto entity) {
         userInfoService.create(entity);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserInformationDto>> getAll(){
         List<UserInformationDto> userInfo = userInfoService.getAll();
 
@@ -35,7 +32,7 @@ public class UserInfoControllerImpl {
         return ResponseEntity.ok(userInfo);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserInformationDto> read(@PathVariable Long id) {
         UserInformationDto userInfo = userInfoService.read(id);
 
@@ -46,15 +43,13 @@ public class UserInfoControllerImpl {
         return ResponseEntity.ok(userInfo);
     }
 
-    @RequestMapping(method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> update(@RequestBody UserInformationDto entity) {
         userInfoService.update(entity);
         return ResponseEntity.ok().build();
     }
 
-
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         userInfoService.delete(id);
         return ResponseEntity.ok().build();

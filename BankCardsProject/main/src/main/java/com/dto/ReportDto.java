@@ -14,5 +14,5 @@ public class ReportDto extends AbstractDto{
 
     private Long operationId;
 
-    private List<String> operationCategories;
+    private String operationCategories;
 }

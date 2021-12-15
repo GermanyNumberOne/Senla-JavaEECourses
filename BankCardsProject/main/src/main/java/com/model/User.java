@@ -17,7 +17,6 @@ import java.util.List;
         @NamedAttributeNode("userInfo"),
 })
 public class User extends BaseEntity {
-
     @Column(name = "firstname")
     private String firstname;
 
@@ -34,4 +33,14 @@ public class User extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private UserInformation userInfo;
 
+    @Column(name = "login")
+    private String login;
+
+    @Column(name = "password")
+    private String password;
+
+    @ManyToMany
+    @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+    inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private List<Role> roles;
 }

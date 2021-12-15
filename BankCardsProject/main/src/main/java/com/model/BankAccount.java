@@ -16,7 +16,7 @@ public class BankAccount extends BaseEntity {
     @OneToMany(mappedBy = "bankAccount",cascade = CascadeType.ALL)
     private List<User> users;
 
-    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bankAccount",cascade = CascadeType.ALL)
     private List<Operation> operations;
 
 }

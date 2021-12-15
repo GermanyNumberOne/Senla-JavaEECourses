@@ -1,5 +1,13 @@
 package com.services.impl;
 
+<<<<<<< HEAD
+import com.dto.BankAccountDto;
+import com.dto.OperationDto;
+import com.dto.UserDto;
+import com.model.User;
+import com.services.api.UserInfoService;
+=======
+>>>>>>> origin
 import com.dao.api.UserInfoDao;
 import com.dto.UserInformationDto;
 import com.model.UserInformation;
@@ -15,6 +23,10 @@ import java.util.stream.Collectors;
 =======
 >>>>>>> origin
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class UserInfoServiceImpl implements UserInfoService {
@@ -29,13 +41,19 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     @Transactional
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin
     public List<UserInformationDto> getAll(){
         return userInfoDao.getAll().stream().map(value -> modelMapper.map(value, UserInformationDto.class)).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin
 >>>>>>> origin
     public void create(UserInformationDto entity) {
         getDefaultDao().create(modelMapper.map(entity, UserInformation.class));

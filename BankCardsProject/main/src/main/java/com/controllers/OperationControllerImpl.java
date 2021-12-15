@@ -16,16 +16,13 @@ public class OperationControllerImpl {
     @Autowired
     private OperationService operationService;
 
-    @RequestMapping(method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@RequestBody OperationDto entity) {
         operationService.create(entity);
         return ResponseEntity.ok().build();
     }
 
-
-    @RequestMapping(method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<OperationDto>> getAll(){
         List<OperationDto> operations = operationService.getAll();
 
@@ -36,8 +33,7 @@ public class OperationControllerImpl {
         return ResponseEntity.ok(operations);
     }
 
-
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OperationDto> read(@PathVariable Long id) {
         OperationDto operation = operationService.read(id);
 
@@ -48,14 +44,13 @@ public class OperationControllerImpl {
         return ResponseEntity.ok(operation);
     }
 
-    @RequestMapping(method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> update(@RequestBody OperationDto entity) {
         operationService.update(entity);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         operationService.delete(id);
         return ResponseEntity.ok().build();

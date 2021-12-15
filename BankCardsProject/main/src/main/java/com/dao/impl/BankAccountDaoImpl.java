@@ -10,5 +10,4 @@ public class BankAccountDaoImpl extends AbstractDao<BankAccount> implements Bank
     protected Class<BankAccount> getEntityClass() {
         return BankAccount.class;
     }
-
 }

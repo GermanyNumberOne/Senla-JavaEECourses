@@ -22,13 +22,13 @@ import java.util.Properties;
 @PropertySource("classpath:h2.properties")
 @EnableTransactionManagement
 public class H2Config {
-    @Value("${database.driver}")
+    @Value("${h2.driver}")
     private String dbDriver;
-    @Value("${database.url}")
+    @Value("${h2.url}")
     private String dbUrl;
-    @Value("${database.username}")
+    @Value("${h2.username}")
     private String dbUsername;
-    @Value("${database.password}")
+    @Value("${h2.password}")
     private String dbPassword;
     @Value("${liquibase.changelog}")
     private String liquibase;
@@ -90,5 +90,4 @@ public class H2Config {
 
         return properties;
     }
-
 }

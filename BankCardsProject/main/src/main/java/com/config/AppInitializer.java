@@ -6,8 +6,9 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses(){
-        return new Class[]{ApplicationConfig.class};
+        return new Class[]{ApplicationConfig.class, DatabaseConfig.class};
     }
+
     @Override
     protected Class<?>[] getServletConfigClasses() {
         return new Class[0];

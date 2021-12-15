@@ -1,5 +1,13 @@
 package com.services.impl;
 
+<<<<<<< HEAD
+import com.dto.CardDto;
+import com.dto.OperationDto;
+import com.model.Card;
+import com.model.UserInformation;
+import com.services.api.BankAccountService;
+=======
+>>>>>>> origin
 import com.dao.api.BankAccountDao;
 import com.dto.BankAccountDto;
 import com.model.BankAccount;
@@ -11,6 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +45,6 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    @Transactional
     public BankAccountDto read(Long id) {
         BankAccount bankAccount = bankAccountDao.read(id);
 

@@ -1,5 +1,13 @@
 package com.services.impl;
 
+<<<<<<< HEAD
+import com.dto.BankAccountDto;
+import com.dto.OperationDto;
+import com.model.Operation;
+import com.model.UserInformation;
+import com.services.api.CardService;
+=======
+>>>>>>> origin
 import com.dao.api.CardDao;
 import com.dto.CardDto;
 import com.model.Card;
@@ -9,6 +17,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.NoResultException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

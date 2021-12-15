@@ -3,7 +3,6 @@ package com.dao.impl;
 import com.dao.api.CardDao;
 import com.model.Card;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.NoResultException;
 
 @Repository

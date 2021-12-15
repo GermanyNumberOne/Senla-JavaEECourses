@@ -1,5 +1,14 @@
 package com.services.impl;
 
+<<<<<<< HEAD
+import com.dto.BankAccountDto;
+import com.dto.OperationDto;
+import com.dto.UserDto;
+import com.model.User;
+import com.model.UserInformation;
+import com.services.api.ReportService;
+=======
+>>>>>>> origin
 import com.dao.api.ReportDao;
 import com.dto.ReportDto;
 import com.model.Report;
@@ -14,6 +23,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 =======
 >>>>>>> origin
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

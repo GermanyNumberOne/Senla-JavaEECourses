@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 
 @RestController
 @RequestMapping(path = "/bank-accounts")
@@ -17,15 +15,13 @@ public class BankAccountControllerImpl {
     @Autowired
     private BankAccountService bankAccountService;
 
-    @RequestMapping(method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@RequestBody BankAccountDto dto) {
         bankAccountService.create(dto);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<BankAccountDto>> getAll(){
         List<BankAccountDto> bankAccounts = bankAccountService.getAll();
 
@@ -35,7 +31,7 @@ public class BankAccountControllerImpl {
         return ResponseEntity.ok(bankAccounts);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BankAccountDto> read(@PathVariable Long id) {
         BankAccountDto bankAccount = bankAccountService.read(id);
 
@@ -46,14 +42,13 @@ public class BankAccountControllerImpl {
         return ResponseEntity.ok(bankAccount);
     }
 
-    @RequestMapping(method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> update(@RequestBody BankAccountDto entity) {
         bankAccountService.update(entity);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         bankAccountService.delete(id);
         return ResponseEntity.ok().build();
