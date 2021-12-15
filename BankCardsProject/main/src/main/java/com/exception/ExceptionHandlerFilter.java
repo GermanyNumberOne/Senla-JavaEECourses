@@ -3,6 +3,10 @@ package com.exception;
 import com.exception.ErrorMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.JwtException;
+import lombok.Getter;
+import lombok.Setter;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
@@ -16,7 +20,12 @@ import java.io.IOException;
 import java.util.Date;
 
 @Component
+@Getter
+@Setter
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
+    @Autowired
+    private ObjectMapper mapper;
+
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         try{
@@ -39,7 +48,6 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
                 throwable.getLocalizedMessage()
         );
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(response.getOutputStream(), message);
+        mapper.writeValue(response.getOutputStream(), message);
     }
 }

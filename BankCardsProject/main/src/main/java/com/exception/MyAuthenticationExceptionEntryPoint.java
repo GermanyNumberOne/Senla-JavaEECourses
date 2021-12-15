@@ -1,6 +1,9 @@
 package com.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -13,7 +16,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
+@Setter
 public class MyAuthenticationExceptionEntryPoint implements AuthenticationEntryPoint {
+    @Autowired
+    private ObjectMapper mapper;
+
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         Map<String, Object> mapBodyException = new HashMap<>();
@@ -25,7 +33,6 @@ public class MyAuthenticationExceptionEntryPoint implements AuthenticationEntryP
         httpServletResponse.setContentType("application/json");
         httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(httpServletResponse.getOutputStream(), mapBodyException);
     }
 }
