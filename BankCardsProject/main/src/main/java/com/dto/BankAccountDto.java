@@ -9,5 +9,6 @@ import java.util.List;
 @Setter
 public class BankAccountDto extends AbstractDto {
     private List<UserDto> users;
+
     private List<OperationDto> operations;
 }

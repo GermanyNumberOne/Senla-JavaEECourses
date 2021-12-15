@@ -8,6 +8,8 @@
       http://www.liquibase.org/xml/ns/pro 
       http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd"
         logicalFilePath="homework-2">
+<<<<<<< HEAD
+=======
     
     <changeSet id="changing-bank_accounts-table" author="I">
         <dropColumn tableName="bank_accounts">
@@ -17,6 +19,7 @@
             <column name="user_id" type="integer"></column>
         </addColumn>
     </changeSet>
+>>>>>>> origin
 
     <changeSet id="changing-cards-table" author="I">
         <addColumn tableName="cards">
@@ -26,16 +29,49 @@
         </addColumn>
     </changeSet>
 
+<<<<<<< HEAD
+    <changeSet id="changing-operations-table" author="">
+        <addColumn tableName="operations">
+            <column name="bank_account_id" type="integer">
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="operations" baseColumnNames="bank_account_id" constraintName="fk_operations_bank_accounts" referencedTableName="bank_accounts"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="adding-operation_id-column-to-report-table" author="I">
+        <addColumn tableName="reports">
+            <column name="operation_id" type="integer">
+                <constraints foreignKeyName="operation_id" references="operations(id)"></constraints>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="adding-bank_account_id-to-users-table" author="I">
+        <preConditions onFail="WARN">
+            <not>
+                <columnExists tableName="users" columnName="bank_account_id"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="users" >
+            <column name="bank_account_id" type="integer">
+                <constraints foreignKeyName="bank_account_id" references="bank_accounts(id)"/>
+=======
     <changeSet id="changing-user_information-table" author="I">
         <addColumn tableName="user_information">
             <column name="id" type="integer" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
+>>>>>>> origin
             </column>
         </addColumn>
     </changeSet>
 
     <changeSet id="changing-users-table" author="I">
+<<<<<<< HEAD
+        <renameColumn tableName="users" oldColumnName="secondname" newColumnName="surname"/>
+=======
         <renameColumn tableName="users" oldColumnName="second_name" newColumnName="surname"/>
+>>>>>>> origin
         <addColumn tableName="users">
             <column name="user_cards" type="character varying">
                 <constraints foreignKeyName="user_cards" references="cards(card_number)"/>
@@ -46,4 +82,15 @@
         </addColumn>
     </changeSet>
 
+<<<<<<< HEAD
+    <changeSet author="I"
+               id="createSequence-example">
+        <createSequence catalogName="cat" cycle="false"
+                        incrementBy="1" ordered="true"
+                        sequenceName="hibernate_sequence" startValue="0" />
+    </changeSet>
+
+
+=======
+>>>>>>> origin
 </databaseChangeLog>

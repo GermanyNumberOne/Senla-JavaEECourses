@@ -1,13 +1,19 @@
 package com.services.impl;
 
-import com.services.api.ReportService;
 import com.dao.api.ReportDao;
 import com.dto.ReportDto;
-import lombok.RequiredArgsConstructor;
 import com.model.Report;
+import com.services.api.ReportService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+<<<<<<< HEAD
+
+import java.util.List;
+import java.util.stream.Collectors;
+=======
+>>>>>>> origin
 
 @Service
 @RequiredArgsConstructor
@@ -16,14 +22,17 @@ public class ReportServiceImpl implements ReportService{
 
     private final ModelMapper modelMapper;
 
-    protected ReportDao getDefaultDao() {
-        return reportDao;
+
+    @Override
+    @Transactional
+    public List<ReportDto> getAll(){
+        return reportDao.getAll().stream().map(value -> modelMapper.map(value, ReportDto.class)).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void create(ReportDto entity) {
-        getDefaultDao().create(modelMapper.map(entity, Report.class));
+        reportDao.create(modelMapper.map(entity, Report.class));
     }
 
     @Override
@@ -37,12 +46,12 @@ public class ReportServiceImpl implements ReportService{
     @Override
     @Transactional
     public void update(ReportDto entity) {
-        getDefaultDao().update(modelMapper.map(entity, Report.class));
+        reportDao.update(modelMapper.map(entity, Report.class));
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        getDefaultDao().delete(id);
+        reportDao.delete(id);
     }
 }

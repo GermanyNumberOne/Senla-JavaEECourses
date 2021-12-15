@@ -56,4 +56,5 @@
     <changeSet id="homework-2-create-index-on-user_information-table" author="I">
         <sqlFile encoding="utf8" path="./sql/12.create-index-on-user_information-table.sql" relativeToChangelogFile="true"/>
     </changeSet>
+
 </databaseChangeLog> 

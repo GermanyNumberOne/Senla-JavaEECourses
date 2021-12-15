@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class OperationDaoImpl extends AbstractDao<Operation> implements OperationDao {
-
     @Override
     protected Class<Operation> getEntityClass() {
         return Operation.class;

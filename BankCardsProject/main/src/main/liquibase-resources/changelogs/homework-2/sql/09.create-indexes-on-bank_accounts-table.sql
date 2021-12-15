@@ -1,1 +1,1 @@
-CREATE INDEX ON bank_accounts(card_number, payment_id)
+CREATE INDEX ON bank_accounts(user_id, payment_id)

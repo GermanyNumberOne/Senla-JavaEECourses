@@ -1,15 +1,19 @@
 package com.services.impl;
 
-import com.services.api.UserService;
 import com.dao.api.UserDao;
 import com.dto.UserDto;
-import lombok.RequiredArgsConstructor;
 import com.model.User;
+import com.services.api.UserService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+<<<<<<< HEAD
+import java.util.stream.Collectors;
+=======
+>>>>>>> origin
 
 @Service
 @RequiredArgsConstructor
@@ -18,14 +22,21 @@ public class UserServiceImpl implements UserService {
 
     private final ModelMapper modelMapper;
 
-    protected UserDao getDefaultDao() {
-        return userDao;
+    @Override
+    @Transactional
+    public void create(UserDto entity) {
+        userDao.create(modelMapper.map(entity, User.class));
     }
 
     @Override
     @Transactional
+<<<<<<< HEAD
+    public List<UserDto> getAll(){
+      return userDao.getAll().stream().map(value -> modelMapper.map(value, UserDto.class)).collect(Collectors.toList());
+=======
     public void create(UserDto entity) {
         getDefaultDao().create(modelMapper.map(entity, User.class));
+>>>>>>> origin
     }
 
     @Override
@@ -34,6 +45,8 @@ public class UserServiceImpl implements UserService {
         User user = userDao.read(id);
 
         return user == null ? null : modelMapper.map(user, UserDto.class);
+<<<<<<< HEAD
+=======
     }
 
     @Override
@@ -59,17 +72,34 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto findUserByIdByEntityGraph(Long id){
         return modelMapper.map(getDefaultDao().findUserByIdByEntityGraph(id), UserDto.class);
+>>>>>>> origin
+    }
+/*
+    @Transactional
+    public UserDto findUserByIdByJPQL(Long id){
+        return modelMapper.map(getDefaultDao().findUserByIdByJPQL(id), UserDto.class);
     }
 
+
+    @Transactional
+    public UserDto findUserByIdByCriteria(Long id){
+        return modelMapper.map(getDefaultDao().findUserByIdByCriteria(id), UserDto.class);
+    }
+
+    @Transactional
+    public UserDto findUserByIdByEntityGraph(Long id){
+        return modelMapper.map(getDefaultDao().findUserByIdByEntityGraph(id), UserDto.class);
+    }
+*/
     @Override
     @Transactional
     public void update(UserDto entity) {
-        getDefaultDao().update(modelMapper.map(entity, User.class));
+        userDao.update(modelMapper.map(entity, User.class));
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        getDefaultDao().delete(id);
+        userDao.delete(id);
     }
 }
